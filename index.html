@@ -136,7 +136,7 @@
                     </button>
                 </div>
 
-                <!-- Combined Audio & Task Instruction Box -->
+                <!-- Bahan Audio sahaja (Tiada Paparan Teks) -->
                 <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-5 mb-5">
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-2">
@@ -146,16 +146,6 @@
                             <span class="font-bold text-sky-900 text-base">BAHAN AUDIO & ARAHAN TUGASAN</span>
                         </div>
                         <span id="audioStatus" class="text-xs font-semibold text-sky-600 bg-white/80 px-2.5 py-1 rounded-md border border-sky-100">Bersedia untuk mendengar</span>
-                    </div>
-
-                    <!-- Display Task Instruction Text -->
-                    <div class="bg-white border border-sky-100 rounded-xl p-4 mb-4">
-                        <h3 class="text-amber-800 font-bold text-xs md:text-sm flex items-center gap-1.5 mb-1 uppercase tracking-wide">
-                            <i class="fa-solid fa-circle-info text-amber-500"></i> Arahan Tugasan:
-                        </h3>
-                        <p id="taskInstruction" class="text-slate-800 font-semibold text-sm md:text-base leading-snug">
-                            Arahan tugasan akan dipaparkan di sini.
-                        </p>
                     </div>
 
                     <!-- Audio Controls -->
@@ -172,16 +162,16 @@
                     </div>
                 </div>
 
-                <!-- Bantuan Bicara Section (Text only, no audio) -->
+                <!-- Bantuan Bicara Section (Paparan Teks Sahaja, Tanpa Audio) -->
                 <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-5 mb-6">
                     <h3 class="text-emerald-900 font-bold text-sm md:text-base flex items-center gap-2 mb-1">
                         <i class="fa-solid fa-comments text-emerald-600"></i> BANTUAN BICARA
                     </h3>
                     <p class="text-xs text-emerald-800 mb-3 italic">Gunakan frasa ini untuk membantu kamu bercerita:</p>
 
-                    <!-- Phrases Grid (Cards) -->
+                    <!-- Phrases Grid -->
                     <div id="phrasesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        <!-- Dynamic phrase cards injected via JS -->
+                        <!-- Card frasa diisi menerusi JavaScript -->
                     </div>
                 </div>
 
@@ -253,7 +243,7 @@
                 wheelLabel: "1 — KANTIN YANG KOTOR",
                 color: "#f87171",
                 audioText: "Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa. Saya berharap kantin sekolah saya dapat menjadi lebih bersih, kemas dan ceria. Saya juga ingin melihat murid-murid bekerjasama menjaga kebersihan kantin.",
-                task: "Dengar audio tentang seorang murid yang menceritakan keadaan kantinnya yang kotor. Kemudian, ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.",
+                task: "Berdasarkan Audio 1, ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.",
                 phrases: [
                     "Pada pendapat saya, ...",
                     "Pada pandangan saya, ...",
@@ -268,7 +258,7 @@
                 wheelLabel: "2 — SAMPAH BERSELERAK",
                 color: "#fb923c",
                 audioText: "Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut. Kebersihan kantin merupakan tanggungjawab semua murid. Kita hendaklah membuang sampah ke dalam tong sampah dan membersihkan meja selepas makan. Jika semua murid bekerjasama, kantin sekolah akan menjadi lebih bersih dan selesa.",
-                task: "Dengar audio tentang sampah yang berselerak di kawasan kantin. Ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.",
+                task: "Berdasarkan Audio 2, ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.",
                 phrases: [
                     "Pada pendapat saya, kita hendaklah ...",
                     "Antara tindakan yang boleh saya lakukan ialah ...",
@@ -279,11 +269,11 @@
             },
             {
                 id: 3,
-                title: "MISI 3: MAKANAN PERLU DITUTUP",
-                wheelLabel: "3 — MAKANAN PERLU DITUTUP",
+                title: "MISI 3: MAKANAN TIDAK DITUTUP",
+                wheelLabel: "3 — MAKANAN TIDAK DITUTUP",
                 color: "#facc15",
                 audioText: "Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut. Oleh itu, makanan perlu ditutup dan diletakkan di tempat yang bersih. Kita juga perlu memastikan makanan yang hendak dimakan berada dalam keadaan bersih dan selamat. Dengan menjaga kebersihan makanan, kita dapat menjaga kesihatan diri.",
-                task: "Dengar audio tentang makanan yang dibiarkan terbuka di kantin. Terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.",
+                task: "Berdasarkan Audio 3, terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.",
                 phrases: [
                     "Pada pendapat saya, makanan perlu ditutup kerana ...",
                     "Hal ini demikian kerana ...",
@@ -298,7 +288,7 @@
                 wheelLabel: "4 — PILIHAN MAKANAN SIHAT",
                 color: "#4ade80",
                 audioText: "Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak. Saya juga memilih air kosong berbanding minuman yang terlalu manis. Makanan yang sihat dapat membantu kita mendapatkan tenaga untuk belajar dan melakukan aktiviti. Oleh itu, kita hendaklah bijak memilih makanan dan minuman ketika berada di kantin.",
-                task: "Dengar audio tentang seorang murid yang memilih makanan di kantin. Ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.",
+                task: "Berdasarkan Audio 4, ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.",
                 phrases: [
                     "Pada pendapat saya, makanan yang baik ialah ...",
                     "Saya akan memilih ...",
@@ -313,7 +303,7 @@
                 wheelLabel: "5 — KANTIN BERSIH DAN SELESA",
                 color: "#38bdf8",
                 audioText: "Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama. Selepas makan, kita hendaklah membuang sampah ke dalam tong sampah dan meletakkan pinggan serta gelas di tempat yang disediakan. Kita juga perlu menjaga kebersihan meja dan tidak membuang sisa makanan merata-rata. Jika semua murid mengamalkan sikap bertanggungjawab, kantin sekolah akan sentiasa bersih dan selesa.",
-                task: "Dengar audio tentang kantin yang bersih dan selesa. Ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.",
+                task: "Berdasarkan Audio 5, ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.",
                 phrases: [
                     "Antara cara yang boleh saya lakukan ialah ...",
                     "Selain itu, saya akan ...",
@@ -498,9 +488,8 @@
             
             document.getElementById('missionBadge').innerText = `MISI ${mission.id}`;
             document.getElementById('missionTitle').innerText = mission.title;
-            document.getElementById('taskInstruction').innerText = mission.task;
 
-            // Render Phrases Grid (Purely text cards)
+            // Render Phrases Grid (Card teks sahaja)
             const grid = document.getElementById('phrasesGrid');
             grid.innerHTML = '';
             mission.phrases.forEach((phrase) => {
@@ -550,8 +539,8 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel(); // Reset audio
 
-                // Play Instruction first, then Mission Audio Text
-                const fullTextToRead = `Arahan tugasan: ${currentMission.task}. Dengar perenggan berikut: ${currentMission.audioText}`;
+                // Gabungan Petikan Audio Misi & Arahan Tugasan untuk dibaca sepenuhnya
+                const fullTextToRead = `Sila fokus dan dengar audio ini. ${currentMission.audioText}. Tugasan anda: ${currentMission.task}`;
 
                 const utterance = new SpeechSynthesisUtterance(fullTextToRead);
                 utterance.lang = 'ms-MY';
@@ -597,3 +586,4 @@
     </script>
 </body>
 </html>
+
