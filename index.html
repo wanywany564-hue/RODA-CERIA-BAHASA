@@ -464,11 +464,12 @@
     <audio id="audioSpin" src="spin.mp3"></audio>
     <audio id="audioDing" src="ding.mp3"></audio>
     <audio id="audioCheer" src="cheer.mp3"></audio>
+    <audio id="audioClick" src="click.mp3"></audio>
 
     <!-- Top Navigation -->
     <div class="top-nav">
-        <button class="btn-icon" onclick="showModal('infoModal')">ℹ INFO GURU</button>
-        <button class="btn-icon" onclick="goHome()">⌂ UTAMA</button>
+        <button class="btn-icon" onclick="playClickSound(); showModal('infoModal')">ℹ INFO GURU</button>
+        <button class="btn-icon" onclick="playClickSound(); goHome()">⌂ UTAMA</button>
     </div>
 
     <!-- Main Container -->
@@ -495,13 +496,13 @@
                 <canvas id="wheelCanvas" width="420" height="420"></canvas>
             </div>
 
-            <button id="spinBtn" class="btn-primary" onclick="spinWheel()">🎡 PUTAR RODA</button>
+            <button id="spinBtn" class="btn-primary" onclick="playClickSound(); spinWheel()">🎡 PUTAR RODA</button>
 
             <!-- Spin Result Output -->
             <div id="spinResultBox" class="selection-box">
                 <p style="font-weight: 700; color: #3F51B5; margin-bottom: 5px;">CABARAN ANDA ADALAH...</p>
                 <h3 id="selectedSpTitle" style="color: var(--primary-dark); margin-bottom: 10px;">-</h3>
-                <button class="btn-secondary" onclick="startSpChallenge()">MULA CABARAN ➔</button>
+                <button class="btn-secondary" onclick="playClickSound(); startSpChallenge()">MULA CABARAN ➔</button>
             </div>
         </div>
 
@@ -528,10 +529,10 @@
                 </div>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
-                    <button class="btn-primary" onclick="playQuestionAudio()" style="font-size: 1rem; padding: 10px 20px;">
+                    <button class="btn-primary" onclick="playClickSound(); playQuestionAudio()" style="font-size: 1rem; padding: 10px 20px;">
                         ▶ DENGAR SOALAN
                     </button>
-                    <button class="btn-secondary" onclick="playQuestionAudio()" style="font-size: 1rem; padding: 10px 20px; background: #78909C;">
+                    <button class="btn-secondary" onclick="playClickSound(); playQuestionAudio()" style="font-size: 1rem; padding: 10px 20px; background: #78909C;">
                         ↻ ULANG AUDIO
                     </button>
                 </div>
@@ -541,7 +542,7 @@
 
             <!-- Teacher Toggle Panel -->
             <div class="teacher-panel">
-                <div class="teacher-header" onclick="toggleTeacherPanel()">
+                <div class="teacher-header" onclick="playClickSound(); toggleTeacherPanel()">
                     <span>🔐 PANDUAN GURU (Klik untuk buka/tutup)</span>
                     <span id="panelArrow">▼</span>
                 </div>
@@ -561,14 +562,14 @@
 
             <!-- Manual Teacher Evaluation -->
             <div class="eval-box">
-                <button class="btn-eval correct" onclick="evaluateAnswer('correct')">✓ BETUL</button>
-                <button class="btn-eval guidance" onclick="evaluateAnswer('guidance')">~ PERLU BIMBINGAN</button>
-                <button class="btn-eval retry" onclick="evaluateAnswer('retry')">↻ CUBA LAGI</button>
+                <button class="btn-eval correct" onclick="playClickSound(); evaluateAnswer('correct')">✓ BETUL</button>
+                <button class="btn-eval guidance" onclick="playClickSound(); evaluateAnswer('guidance')">~ PERLU BIMBINGAN</button>
+                <button class="btn-eval retry" onclick="playClickSound(); evaluateAnswer('retry')">↻ CUBA LAGI</button>
             </div>
 
             <div class="eval-feedback" id="evalFeedback"></div>
 
-            <button id="nextBtn" class="btn-secondary" style="display: none; margin-top: 15px;" onclick="nextQuestion()">
+            <button id="nextBtn" class="btn-secondary" style="display: none; margin-top: 15px;" onclick="playClickSound(); nextQuestion()">
                 SOALAN SETERUSNYA ➔
             </button>
         </div>
@@ -591,8 +592,8 @@
             </div>
 
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <button class="btn-primary" onclick="restartGame()">🔄 MAIN SEMULA</button>
-                <button class="btn-secondary" onclick="goHome()">🎡 KEMBALI KE RODA</button>
+                <button class="btn-primary" onclick="playClickSound(); restartGame()">🔄 MAIN SEMULA</button>
+                <button class="btn-secondary" onclick="playClickSound(); goHome()">🎡 KEMBALI KE RODA</button>
             </div>
         </div>
 
@@ -601,7 +602,7 @@
     <!-- ================= INFO GURU MODAL ================= -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('infoModal')">&times;</span>
+            <span class="close-modal" onclick="playClickSound(); closeModal('infoModal')">&times;</span>
             <h2 style="color: var(--primary-dark); margin-bottom: 10px;">ℹ INFO GURU</h2>
             <p style="margin-bottom: 15px;">Maklumat Aplikasi BBM Digital Interaktif:</p>
 
@@ -625,6 +626,15 @@
     </div>
 
     <script>
+        /* ================= SOUND CLICK HELPER ================= */
+        function playClickSound() {
+            const clickAudio = document.getElementById('audioClick');
+            if (clickAudio) {
+                clickAudio.currentTime = 0;
+                clickAudio.play().catch(e => console.log('Audio click error:', e));
+            }
+        }
+
         /* ================= DATABASE 15 SOALAN (NAMA AUDIO: soalan1.mp3 - soalan15.mp3) ================= */
         const questionsData = {
             "1.1.1": [
@@ -634,7 +644,7 @@
                     audioFile: "soalan1.mp3",
                     imageFile: "gambar1.png",
                     instruction: "Nyatakan dua perkara yang perlu dilakukan sebelum makan di kantin.",
-                    audioText: "“Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih.”,
+                    audioText: "“Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih.”",
                     answer: "Dua perkara yang perlu dilakukan sebelum makan ialah beratur dengan tertib dan memastikan tangan bersih.",
                     keywords: ["beratur tertib", "tangan bersih", "cuci tangan"]
                 },
@@ -644,7 +654,7 @@
                     audioFile: "soalan2.mp3",
                     imageFile: "gambar2.png",
                     instruction: "Nyatakan tindakan yang patut dilakukan oleh Aiman.",
-                    audioText: "“Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja.”,
+                    audioText: "“Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja.”",
                     answer: "Tindakan yang patut dilakukan oleh Aiman ialah mengutip pembungkus makanan tersebut dan membuangnya ke dalam tong sampah.",
                     keywords: ["kutip pembungkus", "buang tong sampah", "bersihkan meja"]
                 },
@@ -654,7 +664,7 @@
                     audioFile: "soalan3.mp3",
                     imageFile: "gambar3.png",
                     instruction: "Nyatakan arahan yang diberikan kepada Deena sebelum dia makan.",
-                    audioText: "“Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan.”,
+                    audioText: "“Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan.”",
                     answer: "Deena diminta supaya membasuh tangan menggunakan sabun sebelum makan.",
                     keywords: ["basuh tangan", "guna sabun"]
                 },
@@ -664,7 +674,7 @@
                     audioFile: "soalan4.mp3",
                     imageFile: "gambar4.png",
                     instruction: "Nyatakan peringatan yang disampaikan kepada murid-murid apabila membeli makanan di kantin.",
-                    audioText: "“Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor.”,
+                    audioText: "“Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor.”",
                     answer: "Peringatan yang disampaikan ialah memastikan makanan ditutup dengan baik dan tidak menyentuh makanan dengan tangan yang kotor.",
                     keywords: ["makanan ditutup", "jangan sentuh tangan kotor"]
                 },
@@ -674,7 +684,7 @@
                     audioFile: "soalan5.mp3",
                     imageFile: "gambar5.png",
                     instruction: "Nyatakan respons yang sesuai terhadap situasi tersebut.",
-                    audioText: "“Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja.”,
+                    audioText: "“Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja.”",
                     answer: "Saya akan menegur rakan tersebut secara baik serta memintanya mengutip tisu itu dan membuangnya ke dalam tong sampah.",
                     keywords: ["tegur dengan baik", "kutip tisu", "buang tong sampah"]
                 }
@@ -686,7 +696,7 @@
                     audioFile: "soalan6.mp3",
                     imageFile: "gambar6.png",
                     instruction: "Jelaskan kepada rakan kamu sebab dia perlu mencuci tangan sebelum makan secara bertatasusila.",
-                    audioText: "“Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan.”,
+                    audioText: "“Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan.”",
                     answer: "\"Rakan saya, kita perlu mencuci tangan sebelum makan kerana tangan kita kotor selepas bermain dan mempunyai kuman. Ini dapat elakkan kita daripada sakit perut.\"",
                     keywords: ["kuman", "kotoran", "elak sakit perut", "sopan / bertatasusila"]
                 },
@@ -696,7 +706,7 @@
                     audioFile: "soalan7.mp3",
                     imageFile: "gambar7.png",
                     instruction: "Terangkan kepentingan menjaga kebersihan meja makan di kantin secara bertatasusila.",
-                    audioText: "“Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin.",
+                    audioText: "“Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin.”",
                     answer: "Kita perlu menjaga kebersihan meja makan supaya tempat makan sentiasa bersih, selesa untuk murid lain menggunakannya, dan dapat mengelakkan lalat atau kuman.",
                     keywords: ["tempat bersih", "selesa", "elak lalat / kuman"]
                 },
@@ -706,7 +716,7 @@
                     audioFile: "soalan8.mp3",
                     imageFile: "gambar8.png",
                     instruction: "Jelaskan kepada rakan kamu cara menjaga kebersihan tempat makan sebelum meninggalkan kantin secara bertatasusila.",
-                    audioText: "“Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin.”,
+                    audioText: "“Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin.”",
                     answer: "\"Kawan-kawan, sebelum kita balik ke kelas, mari kita mengemas meja, mengutip semua sisa makanan atau sampah, dan membuangnya ke dalam tong sampah.\"",
                     keywords: ["kemas meja", "kutip sisa / sampah", "buang tong sampah"]
                 },
@@ -716,7 +726,7 @@
                     audioFile: "soalan9.mp3",
                     imageFile: "gambar9.png",
                     instruction: "Ungkapkan kata teguran yang bersesuaian dan sopan kepada rakan kamu itu.",
-                    audioText: "“Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja.”,
+                    audioText: "“Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja.”",
                     answer: "\"Maafkan saya, bolehkah kamu tolong buang sisa makanan ini ke dalam tong sampah supaya meja kita sentiasa bersih dan selesa?\"",
                     keywords: ["maafkan saya", "minta tolong", "sopan", "bertatasusila"]
                 },
@@ -726,7 +736,7 @@
                     audioFile: "soalan10.mp3",
                     imageFile: "gambar10.png",
                     instruction: "Terangkan tiga cara memastikan kantin sekolah sentiasa bersih secara bertatasusila.",
-                    audioText: "“Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih.”,
+                    audioText: "“Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih.”",
                     answer: "Tiga cara memastikan kantin sekolah sentiasa bersih ialah membuang sampah ke dalam tong sampah, membersihkan meja selepas makan, dan membasuh tangan sebelum serta selepas makan.",
                     keywords: ["3 cara", "tong sampah", "bersihkan meja", "basuh tangan"]
                 }
@@ -738,7 +748,7 @@
                     audioFile: "soalan11.mp3",
                     imageFile: "gambar11.png",
                     instruction: "Ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.",
-                    audioText: "“Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa. Saya berharap kantin sekolah saya dapat menjadi lebih bersih, kemas dan ceria. Saya juga ingin melihat murid-murid bekerjasama menjaga kebersihan kantin.”,
+                    audioText: "“Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa. Saya berharap kantin sekolah saya dapat menjadi lebih bersih, kemas dan ceria. Saya juga ingin melihat murid-murid bekerjasama menjaga kebersihan kantin.”",
                     answer: "Kantin sekolah yang saya impikan ialah kantin yang bersih, kemas, dan ceria. Lantai dan mejanya bebas daripada sampah bertaburan, manakala semua murid bekerjasama menjaga kebersihan dengan gembira.",
                     keywords: ["bersih", "kemas", "ceria", "bebas sampah", "kerjasama murid", "sebutan/intonasi"]
                 },
@@ -748,7 +758,7 @@
                     audioFile: "soalan12.mp3",
                     imageFile: "gambar12.png",
                     instruction: "Ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.",
-                    audioText: "“Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut. Kebersihan kantin merupakan tanggungjawab semua murid. Kita hendaklah membuang sampah ke dalam tong sampah dan membersihkan meja selepas makan. Jika semua murid bekerjasama, kantin sekolah akan menjadi lebih bersih dan selesa.”,
+                    audioText: "“Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut. Kebersihan kantin merupakan tanggungjawab semua murid. Kita hendaklah membuang sampah ke dalam tong sampah dan membersihkan meja selepas makan. Jika semua murid bekerjasama, kantin sekolah akan menjadi lebih bersih dan selesa.”",
                     answer: "Tindakan yang boleh saya lakukan ialah membuang pembungkus makanan dan tisu ke dalam tong sampah serta membersihkan meja selepas makan.",
                     keywords: ["buang sampah", "tong sampah", "bersihkan meja", "bertanggungjawab"]
                 },
@@ -758,7 +768,7 @@
                     audioFile: "soalan13.mp3",
                     imageFile: "gambar13.png",
                     instruction: "Terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.",
-                    audioText: "“Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut. Oleh itu, makanan perlu ditutup dan diletakkan di tempat yang bersih. Kita juga perlu memastikan makanan yang hendak dimakan berada dalam keadaan bersih dan selamat. Dengan menjaga kebersihan makanan, kita dapat menjaga kesihatan diri.”,
+                    audioText: "“Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut. Oleh itu, makanan perlu ditutup dan diletakkan di tempat yang bersih. Kita juga perlu memastikan makanan yang hendak dimakan berada dalam keadaan bersih dan selamat. Dengan menjaga kebersihan makanan, kita dapat menjaga kesihatan diri.”",
                     answer: "Makanan perlu ditutup dan dijaga kebersihannya supaya tidak terkena habuk dan kotoran, elak dihinggapi serangga, serta memastikan makanan selamat dimakan untuk menjaga kesihatan diri.",
                     keywords: ["elak habuk/kotoran", "elak serangga/lalat", "makanan selamat", "jaga kesihatan"]
                 },
@@ -768,7 +778,7 @@
                     audioFile: "soalan14.mp3",
                     imageFile: "gambar14.png",
                     instruction: "Ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.",
-                    audioText: "“Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak. Saya juga memilih air kosong berbanding minuman yang terlalu manis. Makanan yang sihat dapat membantu kita mendapatkan tenaga untuk belajar dan melakukan aktiviti. Oleh itu, kita hendaklah bijak memilih makanan dan minuman ketika berada di kantin.”,
+                    audioText: "“Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak. Saya juga memilih air kosong berbanding minuman yang terlalu manis. Makanan yang sihat dapat membantu kita mendapatkan tenaga untuk belajar dan melakukan aktiviti. Oleh itu, kita hendaklah bijak memilih makanan dan minuman ketika berada di kantin.”",
                     answer: "Ciri-ciri makanan yang baik ialah makanan yang berkhasiat seperti nasi, sayur-sayuran, dan buah-buahan, tidak terlalu berminyak, serta mengutamakan air kosong berbanding minuman yang terlalu manis.",
                     keywords: ["berkhasiat", "sayur & buah", "kurang minyak", "air kosong", "kurang manis"]
                 },
@@ -778,7 +788,7 @@
                     audioFile: "soalan15.mp3",
                     imageFile: "gambar15.png",
                     instruction: "Ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.",
-                    audioText: "“Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama. Selepas makan, kita hendaklah membuang sampah ke dalam tong sampah dan meletakkan pinggan serta gelas di tempat yang disediakan. Kita juga perlu menjaga kebersihan meja dan tidak membuang sisa makanan merata-rata. Jika semua murid mengamalkan sikap bertanggungjawab, kantin sekolah akan sentiasa bersih dan selesa.”,
+                    audioText: "“Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama. Selepas makan, kita hendaklah membuang sampah ke dalam tong sampah dan meletakkan pinggan serta gelas di tempat yang disediakan. Kita juga perlu menjaga kebersihan meja dan tidak membuang sisa makanan merata-rata. Jika semua murid mengamalkan sikap bertanggungjawab, kantin sekolah akan sentiasa bersih dan selesa.”",
                     answer: "Tiga cara untuk mengekalkan kebersihan kantin sekolah ialah:\n1. Membuang sampah ke dalam tong sampah.\n2. Meletakkan pinggan dan gelas di tempat yang disediakan.\n3. Menjaga kebersihan meja dan tidak membuang sisa makanan merata-rata.",
                     keywords: ["3 cara", "buang sampah", "pulangkan pinggan/gelas", "jaga kebersihan meja"]
                 }
