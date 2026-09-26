@@ -46,7 +46,6 @@
             overflow-x: hidden;
         }
 
-        /* Top Nav Bar */
         .top-nav {
             width: 100%;
             max-width: 1000px;
@@ -77,7 +76,6 @@
             background: #E1F5FE;
         }
 
-        /* Container Card */
         .game-card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -93,7 +91,6 @@
             border: 4px solid #B2EBF2;
         }
 
-        /* Typography */
         h1, h2, h3 {
             font-family: 'Fredoka', cursive, sans-serif;
             text-align: center;
@@ -125,7 +122,6 @@
             border: 2px dashed #FFE0B2;
         }
 
-        /* Flow Indicators */
         .flow-container {
             display: flex;
             gap: 12px;
@@ -146,7 +142,6 @@
             gap: 5px;
         }
 
-        /* Pages Section */
         .page {
             display: none;
             width: 100%;
@@ -158,37 +153,40 @@
             display: flex;
         }
 
-        /* Wheel Styles */
+        /* Container Canvas Roda */
         .wheel-container {
             position: relative;
-            width: 380px;
-            height: 380px;
+            width: 360px;
+            height: 360px;
             margin: 15px 0 25px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .wheel-pointer {
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid var(--red);
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 36px solid var(--red);
             z-index: 10;
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
         }
 
         canvas#wheelCanvas {
-            width: 100%;
-            height: 100%;
+            width: 360px;
+            height: 360px;
             border-radius: 50%;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-            background-color: #FFF;
+            background-color: #FFFFFF;
+            display: block;
         }
 
-        /* Buttons */
         .btn-primary {
             background: var(--accent);
             color: white;
@@ -424,23 +422,10 @@
 
         .info-table th { background: #ECEFF1; }
 
-        /* Debug Box jika ada error */
-        #debugBox {
-            display: none;
-            background: #FFEBEE;
-            color: #C62828;
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #EF9A9A;
-            margin-bottom: 10px;
-            width: 100%;
-            font-family: monospace;
-            font-size: 0.85rem;
-        }
-
         @media (max-width: 600px) {
             .main-title { font-size: 1.8rem; }
-            .wheel-container { width: 300px; height: 300px; }
+            .wheel-container { width: 280px; height: 280px; }
+            canvas#wheelCanvas { width: 280px; height: 280px; }
             .game-card { padding: 15px; }
             .btn-primary { font-size: 1.1rem; padding: 12px 24px; }
         }
@@ -448,26 +433,19 @@
 </head>
 <body>
 
-    <!-- Fail Audio Tersembunyi -->
     <audio id="audioQuestion"></audio>
     <audio id="audioSpin" src="spin.mp3"></audio>
     <audio id="audioDing" src="ding.mp3"></audio>
     <audio id="audioCheer" src="cheer.mp3"></audio>
     <audio id="audioClick" src="click.mp3"></audio>
 
-    <!-- Top Navigation -->
     <div class="top-nav">
         <button class="btn-icon" onclick="playClickSound(); showModal('infoModal')">ℹ INFO GURU</button>
         <button class="btn-icon" onclick="playClickSound(); goHome()">⌂ UTAMA</button>
     </div>
 
-    <!-- Main Container -->
     <div class="game-card">
 
-        <!-- Debug Box Error Handler -->
-        <div id="debugBox"></div>
-
-        <!-- Flow Tagline -->
         <div class="flow-container">
             <div class="flow-step">🎧 DENGAR</div>
             <div class="flow-step">🧠 FIKIR</div>
@@ -475,22 +453,20 @@
             <div class="flow-step">⭐ BERJAYA</div>
         </div>
 
-        <!-- ================= PAGE 1: HALAMAN UTAMA ================= -->
+        <!-- PAGE 1: UTAMA -->
         <div id="pageHome" class="page active">
             <h1 class="main-title">RODA CERIA BAHASA</h1>
             <p class="sub-title">Roda Kemahiran Mendengar dan Bertutur</p>
             
             <div class="tagline">“Dengar dengan teliti, fikir dengan bijak, bertutur dengan yakin!”</div>
 
-            <!-- Wheel UI -->
             <div class="wheel-container">
                 <div class="wheel-pointer"></div>
-                <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                <canvas id="wheelCanvas" width="360" height="360"></canvas>
             </div>
 
             <button id="spinBtn" class="btn-primary" onclick="playClickSound(); spinWheel()">🎡 PUTAR RODA</button>
 
-            <!-- Spin Result Output -->
             <div id="spinResultBox" class="selection-box">
                 <p style="font-weight: 700; color: #3F51B5; margin-bottom: 5px;">CABARAN ANDA ADALAH...</p>
                 <h3 id="selectedSpTitle" style="color: var(--primary-dark); margin-bottom: 10px;">-</h3>
@@ -498,7 +474,7 @@
             </div>
         </div>
 
-        <!-- ================= PAGE 2: HALAMAN SOALAN ================= -->
+        <!-- PAGE 2: SOALAN -->
         <div id="pageQuestion" class="page">
             <div id="spBadge" class="sp-badge">SP 1.1.1</div>
             
@@ -559,7 +535,7 @@
             </button>
         </div>
 
-        <!-- ================= PAGE 3: HALAMAN TAMAT ================= -->
+        <!-- PAGE 3: TAMAT -->
         <div id="pageComplete" class="page">
             <h1 class="main-title" style="color: var(--green);">TAHNIAH! 🎉</h1>
             <p class="sub-title">Semua cabaran Roda Ceria Bahasa telah selesai!</p>
@@ -591,183 +567,37 @@
     </div>
 
     <script>
-        // Tangkap Error Jika Ada
-        window.onerror = function(msg, url, line) {
-            const dbg = document.getElementById('debugBox');
-            if(dbg) {
-                dbg.style.display = 'block';
-                dbg.innerHTML = "<b>Error:</b> " + msg + "<br><small>Baris: " + line + "</small>";
-            }
-            return false;
-        };
-
         function playClickSound() {
             try {
                 const clickAudio = document.getElementById('audioClick');
-                if (clickAudio) {
+                if (clickAudio && clickAudio.currentTime !== undefined) {
                     clickAudio.currentTime = 0;
                     clickAudio.play().catch(e => {});
                 }
             } catch(e) {}
         }
 
-        /* DATA SOALAN DENGAN FORMAT STRING MANUSIAWI / AMAN */
         const questionsData = {
             "1.1.1": [
-                {
-                    id: 1,
-                    sp: "1.1.1",
-                    audioFile: "soalan1.mp3",
-                    imageFile: "gambar1.png",
-                    instruction: "Nyatakan dua perkara yang perlu dilakukan sebelum makan di kantin.",
-                    audioText: "Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih.",
-                    answer: "Dua perkara yang perlu dilakukan sebelum makan ialah beratur dengan tertib dan memastikan tangan bersih.",
-                    keywords: ["beratur tertib", "tangan bersih", "cuci tangan"]
-                },
-                {
-                    id: 2,
-                    sp: "1.1.1",
-                    audioFile: "soalan2.mp3",
-                    imageFile: "gambar2.png",
-                    instruction: "Nyatakan tindakan yang patut dilakukan oleh Aiman.",
-                    audioText: "Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja.",
-                    answer: "Tindakan yang patut dilakukan oleh Aiman ialah mengutip pembungkus makanan tersebut dan membuangnya ke dalam tong sampah.",
-                    keywords: ["kutip pembungkus", "buang tong sampah", "bersihkan meja"]
-                },
-                {
-                    id: 3,
-                    sp: "1.1.1",
-                    audioFile: "soalan3.mp3",
-                    imageFile: "gambar3.png",
-                    instruction: "Nyatakan arahan yang diberikan kepada Deena sebelum dia makan.",
-                    audioText: "Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan.",
-                    answer: "Deena diminta supaya membasuh tangan menggunakan sabun sebelum makan.",
-                    keywords: ["basuh tangan", "guna sabun"]
-                },
-                {
-                    id: 4,
-                    sp: "1.1.1",
-                    audioFile: "soalan4.mp3",
-                    imageFile: "gambar4.png",
-                    instruction: "Nyatakan peringatan yang disampaikan kepada murid-murid apabila membeli makanan di kantin.",
-                    audioText: "Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor.",
-                    answer: "Peringatan yang disampaikan ialah memastikan makanan ditutup dengan baik dan tidak menyentuh makanan dengan tangan yang kotor.",
-                    keywords: ["makanan ditutup", "jangan sentuh tangan kotor"]
-                },
-                {
-                    id: 5,
-                    sp: "1.1.1",
-                    audioFile: "soalan5.mp3",
-                    imageFile: "gambar5.png",
-                    instruction: "Nyatakan respons yang sesuai terhadap situasi tersebut.",
-                    audioText: "Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja.",
-                    answer: "Saya akan menegur rakan tersebut secara baik serta memintanya mengutip tisu itu dan membuangnya ke dalam tong sampah.",
-                    keywords: ["tegur dengan baik", "kutip tisu", "buang tong sampah"]
-                }
+                { id: 1, sp: "1.1.1", audioFile: "soalan1.mp3", imageFile: "gambar1.png", instruction: "Nyatakan dua perkara yang perlu dilakukan sebelum makan di kantin.", audioText: "Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih.", answer: "Dua perkara yang perlu dilakukan sebelum makan ialah beratur dengan tertib dan memastikan tangan bersih.", keywords: ["beratur tertib", "tangan bersih", "cuci tangan"] },
+                { id: 2, sp: "1.1.1", audioFile: "soalan2.mp3", imageFile: "gambar2.png", instruction: "Nyatakan tindakan yang patut dilakukan oleh Aiman.", audioText: "Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja.", answer: "Tindakan yang patut dilakukan oleh Aiman ialah mengutip pembungkus makanan tersebut dan membuangnya ke dalam tong sampah.", keywords: ["kutip pembungkus", "buang tong sampah", "bersihkan meja"] },
+                { id: 3, sp: "1.1.1", audioFile: "soalan3.mp3", imageFile: "gambar3.png", instruction: "Nyatakan arahan yang diberikan kepada Deena sebelum dia makan.", audioText: "Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan.", answer: "Deena diminta supaya membasuh tangan menggunakan sabun sebelum makan.", keywords: ["basuh tangan", "guna sabun"] },
+                { id: 4, sp: "1.1.1", audioFile: "soalan4.mp3", imageFile: "gambar4.png", instruction: "Nyatakan peringatan yang disampaikan kepada murid-murid apabila membeli makanan di kantin.", audioText: "Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor.", answer: "Peringatan yang disampaikan ialah memastikan makanan ditutup dengan baik dan tidak menyentuh makanan dengan tangan yang kotor.", keywords: ["makanan ditutup", "jangan sentuh tangan kotor"] },
+                { id: 5, sp: "1.1.1", audioFile: "soalan5.mp3", imageFile: "gambar5.png", instruction: "Nyatakan respons yang sesuai terhadap situasi tersebut.", audioText: "Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja.", answer: "Saya akan menegur rakan tersebut secara baik serta memintanya mengutip tisu itu dan membuangnya ke dalam tong sampah.", keywords: ["tegur dengan baik", "kutip tisu", "buang tong sampah"] }
             ],
             "1.2.1": [
-                {
-                    id: 6,
-                    sp: "1.2.1",
-                    audioFile: "soalan6.mp3",
-                    imageFile: "gambar6.png",
-                    instruction: "Jelaskan kepada rakan kamu sebab dia perlu mencuci tangan sebelum makan secara bertatasusila.",
-                    audioText: "Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan.",
-                    answer: "Rakan saya, kita perlu mencuci tangan sebelum makan kerana tangan kita kotor selepas bermain dan mempunyai kuman. Ini dapat elakkan kita daripada sakit perut.",
-                    keywords: ["kuman", "kotoran", "elak sakit perut", "sopan / bertatasusila"]
-                },
-                {
-                    id: 7,
-                    sp: "1.2.1",
-                    audioFile: "soalan7.mp3",
-                    imageFile: "gambar7.png",
-                    instruction: "Terangkan kepentingan menjaga kebersihan meja makan di kantin secara bertatasusila.",
-                    audioText: "Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin.",
-                    answer: "Kita perlu menjaga kebersihan meja makan supaya tempat makan sentiasa bersih, selesa untuk murid lain menggunakannya, dan dapat mengelakkan lalat atau kuman.",
-                    keywords: ["tempat bersih", "selesa", "elak lalat / kuman"]
-                },
-                {
-                    id: 8,
-                    sp: "1.2.1",
-                    audioFile: "soalan8.mp3",
-                    imageFile: "gambar8.png",
-                    instruction: "Jelaskan kepada rakan kamu cara menjaga kebersihan tempat makan sebelum meninggalkan kantin secara bertatasusila.",
-                    audioText: "Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin.",
-                    answer: "Kawan-kawan, sebelum kita balik ke kelas, mari kita mengemas meja, mengutip semua sisa makanan atau sampah, dan membuangnya ke dalam tong sampah.",
-                    keywords: ["kemas meja", "kutip sisa / sampah", "buang tong sampah"]
-                },
-                {
-                    id: 9,
-                    sp: "1.2.1",
-                    audioFile: "soalan9.mp3",
-                    imageFile: "gambar9.png",
-                    instruction: "Ungkapkan kata teguran yang bersesuaian dan sopan kepada rakan kamu itu.",
-                    audioText: "Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja.",
-                    answer: "Maafkan saya, bolehkah kamu tolong buang sisa makanan ini ke dalam tong sampah supaya meja kita sentiasa bersih dan selesa?",
-                    keywords: ["maafkan saya", "minta tolong", "sopan", "bertatasusila"]
-                },
-                {
-                    id: 10,
-                    sp: "1.2.1",
-                    audioFile: "soalan10.mp3",
-                    imageFile: "gambar10.png",
-                    instruction: "Terangkan tiga cara memastikan kantin sekolah sentiasa bersih secara bertatasusila.",
-                    audioText: "Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih.",
-                    answer: "Tiga cara memastikan kantin sekolah sentiasa bersih ialah membuang sampah ke dalam tong sampah, membersihkan meja selepas makan, dan membasuh tangan sebelum serta selepas makan.",
-                    keywords: ["3 cara", "tong sampah", "bersihkan meja", "basuh tangan"]
-                }
+                { id: 6, sp: "1.2.1", audioFile: "soalan6.mp3", imageFile: "gambar6.png", instruction: "Jelaskan kepada rakan kamu sebab dia perlu mencuci tangan sebelum makan secara bertatasusila.", audioText: "Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan.", answer: "Rakan saya, kita perlu mencuci tangan sebelum makan kerana tangan kita kotor selepas bermain dan mempunyai kuman. Ini dapat elakkan kita daripada sakit perut.", keywords: ["kuman", "kotoran", "elak sakit perut", "sopan / bertatasusila"] },
+                { id: 7, sp: "1.2.1", audioFile: "soalan7.mp3", imageFile: "gambar7.png", instruction: "Terangkan kepentingan menjaga kebersihan meja makan di kantin secara bertatasusila.", audioText: "Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin.", answer: "Kita perlu menjaga kebersihan meja makan supaya tempat makan sentiasa bersih, selesa untuk murid lain menggunakannya, dan dapat mengelakkan lalat atau kuman.", keywords: ["tempat bersih", "selesa", "elak lalat / kuman"] },
+                { id: 8, sp: "1.2.1", audioFile: "soalan8.mp3", imageFile: "gambar8.png", instruction: "Jelaskan kepada rakan kamu cara menjaga kebersihan tempat makan sebelum meninggalkan kantin secara bertatasusila.", audioText: "Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin.", answer: "Kawan-kawan, sebelum kita balik ke kelas, mari kita mengemas meja, mengutip semua sisa makanan atau sampah, dan membuangnya ke dalam tong sampah.", keywords: ["kemas meja", "kutip sisa / sampah", "buang tong sampah"] },
+                { id: 9, sp: "1.2.1", audioFile: "soalan9.mp3", imageFile: "gambar9.png", instruction: "Ungkapkan kata teguran yang bersesuaian dan sopan kepada rakan kamu itu.", audioText: "Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja.", answer: "Maafkan saya, bolehkah kamu tolong buang sisa makanan ini ke dalam tong sampah supaya meja kita sentiasa bersih dan selesa?", keywords: ["maafkan saya", "minta tolong", "sopan", "bertatasusila"] },
+                { id: 10, sp: "1.2.1", audioFile: "soalan10.mp3", imageFile: "gambar10.png", instruction: "Terangkan tiga cara memastikan kantin sekolah sentiasa bersih secara bertatasusila.", audioText: "Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih.", answer: "Tiga cara memastikan kantin sekolah sentiasa bersih ialah membuang sampah ke dalam tong sampah, membersihkan meja selepas makan, dan membasuh tangan sebelum serta selepas makan.", keywords: ["3 cara", "tong sampah", "bersihkan meja", "basuh tangan"] }
             ],
             "1.3.1": [
-                {
-                    id: 11,
-                    sp: "1.3.1",
-                    audioFile: "soalan11.mp3",
-                    imageFile: "gambar11.png",
-                    instruction: "Ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.",
-                    audioText: "Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa.",
-                    answer: "Kantin sekolah yang saya impikan ialah kantin yang bersih, kemas, dan ceria. Lantai dan mejanya bebas daripada sampah bertaburan, manakala semua murid bekerjasama menjaga kebersihan dengan gembira.",
-                    keywords: ["bersih", "kemas", "ceria", "bebas sampah", "kerjasama murid"]
-                },
-                {
-                    id: 12,
-                    sp: "1.3.1",
-                    audioFile: "soalan12.mp3",
-                    imageFile: "gambar12.png",
-                    instruction: "Ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.",
-                    audioText: "Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut.",
-                    answer: "Tindakan yang boleh saya lakukan ialah membuang pembungkus makanan dan tisu ke dalam tong sampah serta membersihkan meja selepas makan.",
-                    keywords: ["buang sampah", "tong sampah", "bersihkan meja", "bertanggungjawab"]
-                },
-                {
-                    id: 13,
-                    sp: "1.3.1",
-                    audioFile: "soalan13.mp3",
-                    imageFile: "gambar13.png",
-                    instruction: "Terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.",
-                    audioText: "Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut.",
-                    answer: "Makanan perlu ditutup dan dijaga kebersihannya supaya tidak terkena habuk dan kotoran, elak dihinggapi serangga, serta memastikan makanan selamat dimakan untuk menjaga kesihatan diri.",
-                    keywords: ["elak habuk/kotoran", "elak serangga/lalat", "makanan selamat"]
-                },
-                {
-                    id: 14,
-                    sp: "1.3.1",
-                    audioFile: "soalan14.mp3",
-                    imageFile: "gambar14.png",
-                    instruction: "Ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.",
-                    audioText: "Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak.",
-                    answer: "Ciri-ciri makanan yang baik ialah makanan yang berkhasiat seperti nasi, sayur-sayuran, dan buah-buahan, tidak terlalu berminyak, serta mengutamakan air kosong berbanding minuman yang terlalu manis.",
-                    keywords: ["berkhasiat", "sayur & buah", "kurang minyak", "air kosong"]
-                },
-                {
-                    id: 15,
-                    sp: "1.3.1",
-                    audioFile: "soalan15.mp3",
-                    imageFile: "gambar15.png",
-                    instruction: "Ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.",
-                    audioText: "Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama.",
-                    answer: "Tiga cara untuk mengekalkan kebersihan kantin sekolah ialah:\n1. Membuang sampah ke dalam tong sampah.\n2. Meletakkan pinggan dan gelas di tempat yang disediakan.\n3. Menjaga kebersihan meja.",
-                    keywords: ["3 cara", "buang sampah", "pulangkan pinggan", "jaga meja"]
-                }
+                { id: 11, sp: "1.3.1", audioFile: "soalan11.mp3", imageFile: "gambar11.png", instruction: "Ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.", audioText: "Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa.", answer: "Kantin sekolah yang saya impikan ialah kantin yang bersih, kemas, dan ceria. Lantai dan mejanya bebas daripada sampah bertaburan, manakala semua murid bekerjasama menjaga kebersihan dengan gembira.", keywords: ["bersih", "kemas", "ceria", "bebas sampah", "kerjasama murid"] },
+                { id: 12, sp: "1.3.1", audioFile: "soalan12.mp3", imageFile: "gambar12.png", instruction: "Ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.", audioText: "Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut.", answer: "Tindakan yang boleh saya lakukan ialah membuang pembungkus makanan dan tisu ke dalam tong sampah serta membersihkan meja selepas makan.", keywords: ["buang sampah", "tong sampah", "bersihkan meja", "bertanggungjawab"] },
+                { id: 13, sp: "1.3.1", audioFile: "soalan13.mp3", imageFile: "gambar13.png", instruction: "Terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.", audioText: "Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut.", answer: "Makanan perlu ditutup dan dijaga kebersihannya supaya tidak terkena habuk dan kotoran, elak dihinggapi serangga, serta memastikan makanan selamat dimakan untuk menjaga kesihatan diri.", keywords: ["elak habuk/kotoran", "elak serangga/lalat", "makanan selamat"] },
+                { id: 14, sp: "1.3.1", audioFile: "soalan14.mp3", imageFile: "gambar14.png", instruction: "Ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.", audioText: "Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak.", answer: "Ciri-ciri makanan yang baik ialah makanan yang berkhasiat seperti nasi, sayur-sayuran, dan buah-buahan, tidak terlalu berminyak, serta mengutamakan air kosong berbanding minuman yang terlalu manis.", keywords: ["berkhasiat", "sayur & buah", "kurang minyak", "air kosong"] },
+                { id: 15, sp: "1.3.1", audioFile: "soalan15.mp3", imageFile: "gambar15.png", instruction: "Ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.", audioText: "Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama.", answer: "Tiga cara untuk mengekalkan kebersihan kantin sekolah ialah:\n1. Membuang sampah ke dalam tong sampah.\n2. Meletakkan pinggan dan gelas di tempat yang disediakan.\n3. Menjaga kebersihan meja.", keywords: ["3 cara", "buang sampah", "pulangkan pinggan", "jaga meja"] }
             ]
         };
 
@@ -781,8 +611,7 @@
         let currentQuestionIndex = 0;
         let spProgress = { "1.1.1": 0, "1.2.1": 0, "1.3.1": 0 };
 
-        /* WHEEL CANVAS LOGIC */
-        let canvas, ctx;
+        /* PENUTUP & FUNGSI PENGGAMBARAN RODA UTAMA */
         const sectors = [
             { color: "#0288D1", label: "SP 1.1.1", code: "1.1.1" },
             { color: "#4CAF50", label: "SP 1.2.1", code: "1.2.1" },
@@ -794,11 +623,12 @@
         let isSpinning = false;
 
         function drawWheel() {
-            canvas = document.getElementById("wheelCanvas");
+            const canvas = document.getElementById("wheelCanvas");
             if (!canvas) return;
-            ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return;
 
-            const width = canvas.width;
+            const width = 360;
             const center = width / 2;
             const radius = center - 10;
 
@@ -818,7 +648,7 @@
 
                 ctx.save();
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 20px sans-serif";
+                ctx.font = "bold 20px Arial, sans-serif";
                 ctx.translate(center + Math.cos(angle + arc / 2) * (radius * 0.65), center + Math.sin(angle + arc / 2) * (radius * 0.65));
                 ctx.rotate(angle + arc / 2 + Math.PI / 2);
                 const text = sectors[i].label;
@@ -826,7 +656,6 @@
                 ctx.restore();
             }
 
-            // Pin Tengah
             ctx.beginPath();
             ctx.arc(center, center, 25, 0, 2 * Math.PI);
             ctx.fillStyle = "#FFFFFF";
@@ -836,14 +665,22 @@
             ctx.stroke();
         }
 
-        // Jalankan drawWheel saat seluruh halaman siap
-        window.onload = function() {
+        // Panggil penampilan roda secara berulang sampai benar-benar muncul
+        function initWheel() {
             drawWheel();
-        };
+            setTimeout(drawWheel, 100);
+            setTimeout(drawWheel, 500);
+        }
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            initWheel();
+        } else {
+            document.addEventListener('DOMContentLoaded', initWheel);
+        }
 
         function spinWheel() {
             if (isSpinning) return;
-            
+
             let availableSps = Object.keys(spProgress).filter(sp => spProgress[sp] < 5);
             if (availableSps.length === 0) {
                 showPage('pageComplete');
@@ -914,7 +751,7 @@
             const player = document.getElementById('audioQuestion');
             player.src = q.audioFile;
             player.play().catch(e => {
-                alert("Fail audio (" + q.audioFile + ") tidak dijumpai.");
+                alert("Fail audio (" + q.audioFile + ") belum ada / tidak dijumpai.");
             });
         }
 
@@ -1004,6 +841,9 @@
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            if (pageId === 'pageHome') {
+                setTimeout(drawWheel, 50);
+            }
         }
 
         function goHome() {
