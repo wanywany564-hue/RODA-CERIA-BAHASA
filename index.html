@@ -164,7 +164,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Wheel Styles (Dibesarkan) */
+        /* Wheel Styles */
         .wheel-container {
             position: relative;
             width: 420px;
@@ -446,7 +446,7 @@
 </head>
 <body>
 
-    <!-- Elements Audio Tersembunyi -->
+    <!-- Fail Audio Tersembunyi -->
     <audio id="audioQuestion"></audio>
     <audio id="audioSpin" src="spin.mp3"></audio>
     <audio id="audioDing" src="ding.mp3"></audio>
@@ -767,7 +767,7 @@
             "1.3.1": 0
         };
 
-        /* ================= WHEEL LOGIC ================= */
+        /* ================= WHEEL LOGIC (LAJU & SLOW DOWN) ================= */
         const canvas = document.getElementById("wheelCanvas");
         const ctx = canvas.getContext("2d");
         const sectors = [
@@ -828,33 +828,31 @@
             document.getElementById('spinBtn').disabled = true;
             document.getElementById('spinResultBox').style.display = 'none';
 
-            // Play Custom Spin Sound
+            // Mainkan Bunyi Putar Roda
             const audioSpin = document.getElementById('audioSpin');
             audioSpin.currentTime = 0;
             audioSpin.play().catch(e => console.log('Audio spin error:', e));
 
             let spinTime = 0;
-            let spinTimeTotal = Math.random() * 2000 + 3000;
-            let spinAngleStart = Math.random() * 10 + 10;
+            let spinTimeTotal = Math.random() * 1500 + 3500; // Tempoh pusingan 3.5s - 5s
+            let spinAngleStart = Math.random() * 20 + 40;   // Kelajuan permulaan SANGAT LAJU
 
             function rotateWheel() {
-                spinTime += 30;
+                spinTime += 20;
                 if (spinTime >= spinTimeTotal) {
                     stopRotateWheel();
                     return;
                 }
-                let spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-                startAngle += (spinAngle * Math.PI / 180);
+                // Menggunakan Cubic Ease-Out untuk kelajuan tinggi di awal dan memperlahan di akhir
+                let progress = spinTime / spinTimeTotal;
+                let easeOutFactor = 1 - Math.pow(1 - progress, 3);
+                let currentSpeed = spinAngleStart * (1 - easeOutFactor);
+                
+                startAngle += (currentSpeed * Math.PI / 180);
                 drawWheel();
-                setTimeout(rotateWheel, 30);
+                setTimeout(rotateWheel, 20);
             }
             rotateWheel();
-        }
-
-        function easeOut(t, b, c, d) {
-            const ts = (t /= d) * t;
-            const tc = ts * t;
-            return b + c * (tc + -3 * ts + 3 * t);
         }
 
         function stopRotateWheel() {
@@ -864,6 +862,7 @@
             const audioSpin = document.getElementById('audioSpin');
             audioSpin.pause();
 
+            // Mainkan Bunyi Berhenti (Ding)
             const audioDing = document.getElementById('audioDing');
             audioDing.currentTime = 0;
             audioDing.play().catch(e => console.log('Audio ding error:', e));
