@@ -3,587 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roda Ceria Bahasa - Kesihatan & Kebersihan Kantin</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Roda Cabaran Kantin Sihat - BM Tahun 4</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+        * { box-sizing: border-box; }
+        html, body { 
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden !important; 
+            font-family: 'Nunito', sans-serif; 
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #d97706 100%);
+            user-select: none;
         }
-        h1, h2, h3, .font-fun {
-            font-family: 'Fredoka', cursive;
+        .font-game { font-family: 'Fredoka One', cursive; }
+        .spin-wheel { transition: transform 4s cubic-bezier(0.15, 0.9, 0.15, 1); }
+        .btn-game { 
+            box-shadow: 0 4px 0 rgba(0,0,0,0.25); 
+            transition: all 0.1s ease-in-out; 
         }
-        
-        .canteen-bg {
-            background-color: #ffffff;
-            background-image: radial-gradient(#3b82f6 0.75px, transparent 0.75px), radial-gradient(#3b82f6 0.75px, #ffffff 0.75px);
-            background-size: 30px 30px;
-            background-position: 0 0,15px 15px;
-            opacity: 0.95;
+        .btn-game:active { 
+            transform: translateY(3px); 
+            box-shadow: 0 1px 0 rgba(0,0,0,0.25); 
         }
-
-        .btn-bounce {
-            transition: transform 0.2s, cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .btn-bounce:hover {
-            transform: scale(1.05);
-        }
-        .btn-bounce:active {
-            transform: scale(0.95);
-        }
-
-        .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        .bg-pop {
+            background-color: #2563eb;
+            background-image: radial-gradient(#60a5fa 3px, transparent 3px);
+            background-size: 20px 20px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased selection:bg-amber-300">
+<body class="bg-pop flex items-center justify-center p-2 sm:p-3">
 
-    <!-- Header Navigation Bar -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-sky-100 sticky top-0 z-50 px-4 py-3 shadow-sm">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-white text-xl shadow-md font-fun font-bold">
-                    🛞
-                </div>
+    <audio id="sfx-cheer" src="cheer.mp3"></audio>
+    <audio id="sfx-wheel" src="wheel_spin.mp3"></audio>
+
+    <!-- BINGKAI UTAMA LANDSCAPE -->
+    <div class="w-full h-full max-w-[1280px] max-h-[720px] bg-amber-400 rounded-3xl border-8 border-yellow-300 shadow-2xl flex flex-col justify-between overflow-hidden p-2 sm:p-3 relative">
+        
+        <!-- HEADER -->
+        <header class="bg-gradient-to-r from-red-500 via-amber-500 to-emerald-500 p-2 rounded-2xl border-4 border-white shadow-md flex justify-between items-center text-white shrink-0">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl sm:text-3xl filter drop-shadow">🎡</span>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold text-sky-900 leading-none">RODA CERIA BAHASA</h1>
-                    <p class="text-xs text-sky-600 font-semibold mt-0.5">Bahasa Melayu Tahun 4</p>
+                    <h1 class="font-game text-base sm:text-xl text-yellow-200 tracking-wide drop-shadow-[0_2px_0_rgba(0,0,0,0.4)]">RODA CABARAN KANTIN SIHAT</h1>
+                    <p class="text-[9px] sm:text-xs text-white font-black opacity-90">BM Tahun 4 • Kemahiran Mendengar & Bertutur</p>
                 </div>
             </div>
-
-            <!-- Progress Tracker -->
-            <div id="progressContainer" class="hidden items-center gap-2 bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-full">
-                <i class="fa-solid fa-trophy text-amber-500 text-sm"></i>
-                <span class="text-xs md:text-sm font-bold text-sky-900" id="progressText">MISI SELESAI: 0/5</span>
+            <div class="bg-blue-950/80 px-3 py-1.5 rounded-xl border-2 border-yellow-300 shadow-inner text-right">
+                <span class="text-[10px] font-black text-yellow-300 block">CABARAN SELESAI</span>
+                <span id="score-text" class="font-game text-sm sm:text-base text-white">0 / 5</span>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Main Dynamic Content Wrapper -->
-    <main class="flex-grow flex items-center justify-center p-4">
-        <div class="w-full max-w-4xl">
-
-            <!-- ================= HALAMAN UTAMA ================= -->
-            <div id="pageHome" class="bg-white/80 canteen-bg rounded-3xl p-6 md:p-10 card-shadow border-4 border-white text-center flex flex-col items-center">
-                <div class="inline-block bg-amber-100 text-amber-800 text-sm font-bold px-4 py-1.5 rounded-full mb-4 border border-amber-300 shadow-sm">
-                    🏫 Tema: Kesihatan & Kebersihan di Kantin Sekolah
+        <!-- PAPARAN UTAMA (RODA & KARTU CABARAN) -->
+        <main id="app-content" class="flex-1 my-2 bg-gradient-to-b from-sky-400 to-blue-600 rounded-2xl border-4 border-white p-2 sm:p-3 flex items-center justify-center relative overflow-hidden shadow-inner">
+            
+            <!-- PAPARAN RODA (DEFAULT) -->
+            <div id="wheel-screen" class="w-full h-full flex flex-col justify-between items-center py-2">
+                <div class="bg-yellow-300 border-2 border-white text-blue-950 px-4 py-1 rounded-full text-xs font-black shadow">
+                    🎲 Putar roda untuk mendapatkan tugasan lisan!
                 </div>
 
-                <h2 class="text-3xl md:text-5xl font-extrabold text-sky-900 mb-3 tracking-wide">
-                    RODA CERIA BAHASA
-                </h2>
-
-                <p class="text-base md:text-lg text-slate-600 mb-6 max-w-lg font-medium">
-                    "Putar roda, dengar audio dan sampaikan cerita kamu!"
-                </p>
-
-                <!-- Hero Illustration Banner -->
-                <div class="relative w-full max-w-md h-56 md:h-64 mb-8 rounded-2xl overflow-hidden border-4 border-sky-200 shadow-inner bg-gradient-to-b from-sky-300 via-sky-100 to-emerald-100 flex flex-col items-center justify-center">
-                    <div class="text-7xl md:text-8xl mb-2 animate-bounce">🏫</div>
-                    <div class="flex gap-4 text-4xl">
-                        <span>🍎</span><span>🥛</span><span>🍱</span><span>🧹</span><span>✨</span>
-                    </div>
-                    <div class="absolute bottom-2 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs text-slate-700 font-bold">
-                        Kemahiran: Mendengar & Bertutur (SP 1.3.1)
-                    </div>
-                </div>
-
-                <button onclick="startGame()" class="btn-bounce bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-fun text-xl md:text-2xl px-10 py-4 rounded-2xl shadow-lg border-b-4 border-emerald-700 flex items-center gap-3">
-                    <i class="fa-solid fa-play"></i> MULA PERMAINAN
-                </button>
-            </div>
-
-            <!-- ================= PAPARAN RODA ================= -->
-            <div id="pageWheel" class="hidden bg-white/90 rounded-3xl p-6 md:p-8 card-shadow border-4 border-white text-center flex flex-col items-center">
-                <h2 class="text-2xl md:text-3xl font-bold text-sky-900 mb-1">PUTAR RODA MISI</h2>
-                <p class="text-slate-600 text-sm mb-4">Tekan butang di bawah untuk menentukan misi anda!</p>
-
-                <!-- Canvas Wheel Container -->
-                <div class="relative flex justify-center items-center my-4">
-                    <!-- Pointer Arrow -->
-                    <div class="absolute -top-4 z-20 text-red-500 text-4xl drop-shadow-md">
-                        <i class="fa-solid fa-location-arrow fa-rotate-180"></i>
-                    </div>
-                    <canvas id="wheelCanvas" width="360" height="360" class="max-w-full h-auto drop-shadow-xl"></canvas>
-                </div>
-
-                <div id="missionAlert" class="hidden my-3 p-3 bg-amber-50 border border-amber-300 text-amber-800 rounded-xl font-bold text-sm"></div>
-
-                <button id="spinBtn" onclick="spinWheel()" class="btn-bounce bg-gradient-to-r from-amber-500 to-orange-500 text-white font-fun text-xl px-8 py-3 rounded-2xl shadow-lg border-b-4 border-orange-700 flex items-center gap-2 mt-2">
-                    <i class="fa-solid fa-arrows-spin"></i> PUTAR RODA
-                </button>
-            </div>
-
-            <!-- ================= PAPARAN MISI ================= -->
-            <div id="pageMission" class="hidden bg-white/95 rounded-3xl p-5 md:p-8 card-shadow border-4 border-white">
-                <!-- Mission Header -->
-                <div class="border-b border-slate-100 pb-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
-                    <div>
-                        <span id="missionBadge" class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full uppercase">MISI 1</span>
-                        <h2 id="missionTitle" class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">Tajuk Misi</h2>
-                    </div>
-                    <button onclick="backToWheel()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-lg font-bold">
-                        <i class="fa-solid fa-rotate-left"></i> Tukar Misi
-                    </button>
-                </div>
-
-                <!-- Bahan Audio sahaja (Tiada Paparan Teks) -->
-                <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-5 mb-5">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <div class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center text-base">
-                                <i class="fa-solid fa-volume-high"></i>
-                            </div>
-                            <span class="font-bold text-sky-900 text-base">BAHAN AUDIO & ARAHAN TUGASAN</span>
+                <!-- RODA CABARAN BERWARNA-WARNI -->
+                <div class="relative w-44 h-44 sm:w-56 sm:h-56 my-auto flex items-center justify-center">
+                    <div id="wheel" class="spin-wheel w-full h-full rounded-full border-8 border-yellow-300 bg-gradient-to-tr from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 shadow-2xl flex items-center justify-center relative overflow-hidden">
+                        <!-- ICON RODA -->
+                        <div class="w-12 h-12 bg-white rounded-full border-4 border-yellow-400 flex items-center justify-center font-game text-blue-900 text-xl z-10 shadow">
+                            🎯
                         </div>
-                        <span id="audioStatus" class="text-xs font-semibold text-sky-600 bg-white/80 px-2.5 py-1 rounded-md border border-sky-100">Bersedia untuk mendengar</span>
                     </div>
-
-                    <!-- Audio Controls -->
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button id="playAudioBtn" onclick="playCombinedAudio()" class="btn-bounce bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow flex items-center gap-2">
-                            <i class="fa-solid fa-play"></i> DENGAR AUDIO
-                        </button>
-                        <button id="replayAudioBtn" onclick="playCombinedAudio()" class="btn-bounce bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm px-4 py-2.5 rounded-xl flex items-center gap-2">
-                            <i class="fa-solid fa-rotate-right"></i> ULANG AUDIO
-                        </button>
-                        <button onclick="stopAudio()" class="btn-bounce bg-rose-100 text-rose-700 hover:bg-rose-200 font-bold text-sm px-3.5 py-2.5 rounded-xl">
-                            <i class="fa-solid fa-stop"></i>
-                        </button>
-                    </div>
+                    <!-- PENUNJUK ATAS -->
+                    <div class="absolute -top-3 text-3xl z-20 filter drop-shadow">👇</div>
                 </div>
 
-                <!-- Bantuan Bicara Section (Paparan Teks Sahaja, Tanpa Audio) -->
-                <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-5 mb-6">
-                    <h3 class="text-emerald-900 font-bold text-sm md:text-base flex items-center gap-2 mb-1">
-                        <i class="fa-solid fa-comments text-emerald-600"></i> BANTUAN BICARA
-                    </h3>
-                    <p class="text-xs text-emerald-800 mb-3 italic">Gunakan frasa ini untuk membantu kamu bercerita:</p>
-
-                    <!-- Phrases Grid -->
-                    <div id="phrasesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        <!-- Card frasa diisi menerusi JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Finish Mission Button -->
-                <div class="flex justify-end pt-2">
-                    <button onclick="completeMission()" class="btn-bounce bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-fun text-lg px-8 py-3.5 rounded-2xl shadow-lg border-b-4 border-emerald-700 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check"></i> SELESAI MISI INI
-                    </button>
-                </div>
-            </div>
-
-            <!-- ================= PAPARAN MODAL MISI SELESAI ================= -->
-            <div id="pageSuccess" class="hidden bg-white/90 rounded-3xl p-8 card-shadow border-4 border-white text-center flex flex-col items-center">
-                <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mb-4 shadow-inner">
-                    🎉
-                </div>
-                <h2 class="text-3xl font-extrabold text-emerald-900 mb-2">SYABAS! MISI BERJAYA DISELESAIKAN!</h2>
-                <p class="text-slate-600 font-medium mb-6">Kamu telah melengkapkan tugasan mendengar dan bertutur dengan baik.</p>
-
-                <button onclick="nextSpin()" class="btn-bounce bg-gradient-to-r from-amber-500 to-orange-500 text-white font-fun text-xl px-8 py-3 rounded-2xl shadow-lg border-b-4 border-orange-700 flex items-center gap-2">
-                    <i class="fa-solid fa-arrows-spin"></i> PUTAR LAGI
+                <button onclick="spinWheel()" class="bg-yellow-400 hover:bg-yellow-300 text-blue-950 font-game py-2 px-8 rounded-2xl text-base sm:text-lg btn-game border-2 border-white shadow-lg">
+                    🎲 PUTAR RODA!
                 </button>
             </div>
 
-            <!-- ================= PAPARAN TAMAT PERMAINAN ================= -->
-            <div id="pageEnd" class="hidden bg-white/95 rounded-3xl p-8 md:p-12 card-shadow border-4 border-white text-center flex flex-col items-center">
-                <div class="text-7xl mb-4 animate-bounce">🏆</div>
-
-                <h2 class="text-3xl md:text-5xl font-extrabold text-sky-900 mb-3 tracking-wide">
-                    HEBAT! ANDA TELAH MENAMATKAN PERMAINAN!
-                </h2>
-
-                <p class="text-base md:text-xl text-slate-700 font-semibold max-w-lg mb-8 leading-relaxed">
-                    Teruskan amalan menjaga kebersihan dan kesihatan di kantin sekolah.
-                </p>
-
-                <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-6 mb-8 w-full max-w-md">
-                    <h3 class="font-bold text-sky-900 text-lg mb-2">Ringkasan Pencapaian</h3>
-                    <div class="flex justify-center items-center gap-2 text-amber-500 text-2xl mb-2">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-xs text-sky-700 font-bold">5 DARIPADA 5 MISI BERJAYA DISELESAIKAN!</p>
-                </div>
-
-                <button onclick="restartGame()" class="btn-bounce bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-fun text-xl px-10 py-4 rounded-2xl shadow-lg border-b-4 border-emerald-700 flex items-center gap-2">
-                    <i class="fa-solid fa-rotate-right"></i> MAIN SEMULA
-                </button>
+            <!-- PAPARAN SOALAN CABARAN (Akan dimasukkan oleh JS) -->
+            <div id="challenge-screen" class="hidden w-full h-full flex-col justify-between items-center text-center">
+                <!-- Kandungan Soalan Dimuatkan Melalui JS -->
             </div>
 
-        </div>
-    </main>
+        </main>
 
-    <!-- Footer -->
-    <footer class="text-center py-3 text-xs text-slate-500 font-medium">
-        Modul Interaktif Bahasa Melayu SK Tahun 4 &bull; KPM
-    </footer>
+        <!-- FOOTER -->
+        <footer class="bg-amber-300 p-1.5 rounded-2xl border-4 border-white flex justify-between items-center shrink-0">
+            <button onclick="resetGame()" class="bg-red-500 hover:bg-red-600 text-white font-game py-1 px-3 rounded-xl text-xs sm:text-sm btn-game border-2 border-white">
+                🔄 Mula Semula
+            </button>
+            <div class="text-[11px] text-blue-950 font-black tracking-wide hidden sm:block">
+                Aktiviti Bertutur & Respon Bertatasusila
+            </div>
+            <button onclick="alert('Petunjuk:\n1. Putar Roda Cabaran.\n2. Baca situasi dan jawab soalan lisan bersama rakan/guru.\n3. Tekan Selesai untuk mengumpul mata!')" class="bg-blue-600 hover:bg-blue-700 text-white font-game py-1 px-3 rounded-xl text-xs sm:text-sm btn-game border-2 border-white">
+                💡 Panduan
+            </button>
+        </footer>
+    </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        /* ================= DATA MISI ================= */
-        const missionsData = [
+        // BANK SOALAN BERDASARKAN STANDARD PEMBELAJARAN TAHUN 4
+        const challenges = [
             {
                 id: 1,
-                title: "MISI 1: KANTIN YANG KOTOR",
-                wheelLabel: "1 — KANTIN YANG KOTOR",
-                color: "#f87171",
-                audioText: "Hai, kawan-kawan! Nama saya Amir. Saya kurang suka keadaan kantin sekolah saya. Selepas waktu rehat, banyak sampah seperti pembungkus makanan dan tisu bertaburan di atas meja dan lantai. Ada juga sisa makanan yang ditinggalkan begitu sahaja. Keadaan ini menyebabkan kantin kelihatan kotor dan kurang selesa. Saya berharap kantin sekolah saya dapat menjadi lebih bersih, kemas dan ceria. Saya juga ingin melihat murid-murid bekerjasama menjaga kebersihan kantin.",
-                task: "Berdasarkan Audio 1, ceritakan suasana kantin sekolah yang kamu impikan dengan sebutan dan intonasi yang menarik.",
-                phrases: [
-                    "Pada pendapat saya, ...",
-                    "Pada pandangan saya, ...",
-                    "Saya mengimpikan kantin yang ...",
-                    "Selain itu, ...",
-                    "Akhir sekali, ..."
-                ]
+                title: "AMALAN MEMBASUH TANGAN",
+                sp: "SP 1.1.1 - Memahami & Merespons Ujaran",
+                img: "premis_singki.png",
+                q1: "Mengapakah kita perlu mencuci tangan dengan sabun sebelum makan di kantin?",
+                q2: "Nyatakan 2 langkah mencuci tangan yang betul secara bersopan.",
+                answer: "Mencuci tangan membunuh kuman dan mengelakkan penyakit keracunan makanan."
             },
             {
                 id: 2,
-                title: "MISI 2: SAMPAH BERSELERAK",
-                wheelLabel: "2 — SAMPAH BERSELERAK",
-                color: "#fb923c",
-                audioText: "Pada waktu rehat, saya ternampak banyak sampah berselerak di kawasan kantin. Ada pembungkus makanan di atas lantai dan tisu yang ditinggalkan di atas meja. Saya berasa sedih melihat keadaan tersebut. Kebersihan kantin merupakan tanggungjawab semua murid. Kita hendaklah membuang sampah ke dalam tong sampah dan membersihkan meja selepas makan. Jika semua murid bekerjasama, kantin sekolah akan menjadi lebih bersih dan selesa.",
-                task: "Berdasarkan Audio 2, ceritakan tindakan yang boleh kamu lakukan untuk menjaga kebersihan kantin sekolah.",
-                phrases: [
-                    "Pada pendapat saya, kita hendaklah ...",
-                    "Antara tindakan yang boleh saya lakukan ialah ...",
-                    "Selain itu, saya boleh ...",
-                    "Hal ini penting kerana ...",
-                    "Oleh itu, ..."
-                ]
+                title: "SITUASI MAKANAN TERDEDAH",
+                sp: "SP 1.2.1 - Bertutur Menjelaskan Perkara",
+                img: "premis_makanan.png",
+                q1: "Apakah risiko jika makanan di kantin dibiarkan terdedah tanpa penutup?",
+                q2: "Bina ayat teguran yang sopan kepada peniaga kantin untuk menutup makanan tersebut.",
+                answer: "Lalat akan hinggap dan membawa bakteria. 'Mak Cik, mohon tutup makanan ini agar sentiasa bersih.'"
             },
             {
                 id: 3,
-                title: "MISI 3: MAKANAN TIDAK DITUTUP",
-                wheelLabel: "3 — MAKANAN TIDAK DITUTUP",
-                color: "#facc15",
-                audioText: "Semasa membeli makanan di kantin, saya ternampak beberapa makanan yang tidak ditutup. Makanan yang terdedah boleh terkena habuk dan kotoran. Serangga juga mungkin hinggap pada makanan tersebut. Oleh itu, makanan perlu ditutup dan diletakkan di tempat yang bersih. Kita juga perlu memastikan makanan yang hendak dimakan berada dalam keadaan bersih dan selamat. Dengan menjaga kebersihan makanan, kita dapat menjaga kesihatan diri.",
-                task: "Berdasarkan Audio 3, terangkan sebab makanan perlu ditutup dan dijaga kebersihannya.",
-                phrases: [
-                    "Pada pendapat saya, makanan perlu ditutup kerana ...",
-                    "Hal ini demikian kerana ...",
-                    "Jika makanan tidak ditutup, ...",
-                    "Selain itu, ...",
-                    "Oleh itu, kita perlulah ..."
-                ]
+                title: "ISU SAMPAH BERSEPAH",
+                sp: "SP 1.3.1 - Menganalisis & Penambahbaikan",
+                img: "premis_sampah.png",
+                q1: "Apakah kesan jika sisa makanan dan pembungkus plastik dibiarkan bersepah di meja kantin?",
+                q2: "Berikan cadangan penambahbaikan agar murid tidak membuang sampah merata-rata.",
+                answer: "Kantin akan berbau busuk. Cadangan: Sediakan lebih banyak tong sampah kitar semula."
             },
             {
                 id: 4,
-                title: "MISI 4: PILIHAN MAKANAN SIHAT",
-                wheelLabel: "4 — PILIHAN MAKANAN SIHAT",
-                color: "#4ade80",
-                audioText: "Setiap hari, saya membeli makanan di kantin sekolah. Saya suka memilih makanan yang berkhasiat seperti nasi, sayur-sayuran, buah-buahan dan makanan yang tidak terlalu berminyak. Saya juga memilih air kosong berbanding minuman yang terlalu manis. Makanan yang sihat dapat membantu kita mendapatkan tenaga untuk belajar dan melakukan aktiviti. Oleh itu, kita hendaklah bijak memilih makanan dan minuman ketika berada di kantin.",
-                task: "Berdasarkan Audio 4, ceritakan ciri-ciri makanan yang baik untuk menjaga kesihatan diri.",
-                phrases: [
-                    "Pada pendapat saya, makanan yang baik ialah ...",
-                    "Saya akan memilih ...",
-                    "Selain itu, ...",
-                    "Makanan ini baik untuk ...",
-                    "Oleh itu, kita hendaklah ..."
-                ]
+                title: "ETIKA MENYEKAP/BERATUR",
+                sp: "SP 1.2.1 - Bertutur Mengikut Konteks",
+                img: "soalan1.png",
+                q1: "Mengapakah murid perlu beratur dengan tertib semasa membeli makanan di kantin?",
+                q2: "Nasihati rakan anda yang cuba memotong barisan secara berhemah.",
+                answer: "Memastikan keadaan teratur dan adil. 'Mari kita beratur bersama-sama demi keselamatan.'"
             },
             {
                 id: 5,
-                title: "MISI 5: KANTIN BERSIH DAN SELESA",
-                wheelLabel: "5 — KANTIN BERSIH DAN SELESA",
-                color: "#38bdf8",
-                audioText: "Kantin yang bersih dan selesa dapat mewujudkan suasana yang menyenangkan ketika waktu rehat. Oleh itu, kita perlu menjaga kebersihan kantin bersama-sama. Selepas makan, kita hendaklah membuang sampah ke dalam tong sampah dan meletakkan pinggan serta gelas di tempat yang disediakan. Kita juga perlu menjaga kebersihan meja dan tidak membuang sisa makanan merata-rata. Jika semua murid mengamalkan sikap bertanggungjawab, kantin sekolah akan sentiasa bersih dan selesa.",
-                task: "Berdasarkan Audio 5, ceritakan tiga cara yang boleh kamu lakukan untuk mengekalkan kebersihan kantin sekolah.",
-                phrases: [
-                    "Antara cara yang boleh saya lakukan ialah ...",
-                    "Selain itu, saya akan ...",
-                    "Saya juga boleh ...",
-                    "Dengan cara ini, ...",
-                    "Kesimpulannya, ..."
-                ]
+                title: "SIMULASI PENGAWAS KANTIN",
+                sp: "SP 1.1.1 & 1.2.1 - Simulasi Lisan",
+                img: "misi3_situasi.png",
+                q1: "Lakokan watak Pengawas Kantin yang memberikan arahan pembersihan meja selepas makan.",
+                q2: "Gunakan sebutan yang jelas dan intonasi yang bersopan santun.",
+                answer: "'Rakan-rakan, sila pastikan meja anda bersih dan angkat pinggan ke dalam besen yang disediakan.'"
             }
         ];
 
-        /* ================= STATE VARIABLES ================= */
-        let completedMissions = [];
-        let currentMission = null;
-        let isSpinning = false;
-        let currentAngle = 0;
+        let completedCount = 0;
 
-        /* ================= INITIALIZATION ================= */
-        window.addEventListener('DOMContentLoaded', () => {
-            drawWheel();
-        });
-
-        /* ================= NAVIGATION ================= */
-        function showPage(pageId) {
-            document.getElementById('pageHome').classList.add('hidden');
-            document.getElementById('pageWheel').classList.add('hidden');
-            document.getElementById('pageMission').classList.add('hidden');
-            document.getElementById('pageSuccess').classList.add('hidden');
-            document.getElementById('pageEnd').classList.add('hidden');
-
-            document.getElementById(pageId).classList.remove('hidden');
-
-            if (pageId !== 'pageHome') {
-                document.getElementById('progressContainer').classList.remove('hidden');
-                document.getElementById('progressContainer').classList.add('flex');
-            } else {
-                document.getElementById('progressContainer').classList.add('hidden');
-                document.getElementById('progressContainer').classList.remove('flex');
-            }
-        }
-
-        function startGame() {
-            showPage('pageWheel');
-            drawWheel();
-        }
-
-        function updateProgress() {
-            const count = completedMissions.length;
-            document.getElementById('progressText').innerText = `MISI SELESAI: ${count}/5`;
-            if (count === 5) {
-                setTimeout(() => {
-                    showPage('pageEnd');
-                    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                }, 500);
-            }
-        }
-
-        /* ================= WHEEL CANVAS LOGIC ================= */
-        const canvas = document.getElementById('wheelCanvas');
-        const ctx = canvas.getContext('2d');
-        const numSlices = missionsData.length;
-        const sliceAngle = (2 * Math.PI) / numSlices;
-
-        function drawWheel() {
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = 160;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            missionsData.forEach((mission, index) => {
-                const angle = currentAngle + index * sliceAngle;
-                
-                // Draw slice
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, angle, angle + sliceAngle);
-                ctx.closePath();
-
-                const isDone = completedMissions.includes(mission.id);
-                ctx.fillStyle = isDone ? '#cbd5e1' : mission.color;
-                ctx.fill();
-                ctx.lineWidth = 4;
-                ctx.strokeStyle = '#ffffff';
-                ctx.stroke();
-
-                // Draw Text / Numbers
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.rotate(angle + sliceAngle / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 14px 'Plus Jakarta Sans', sans-serif";
-                
-                let text = `${mission.id}. ${mission.wheelLabel.split('—')[1].trim()}`;
-                if(isDone) text += " (✓)";
-                
-                ctx.fillText(text, radius - 15, 5);
-                ctx.restore();
-            });
-
-            // Draw Outer Ring
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-            ctx.lineWidth = 6;
-            ctx.strokeStyle = '#38bdf8';
-            ctx.stroke();
-
-            // Draw Center Circle
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = '#0284c7';
-            ctx.stroke();
-
-            ctx.fillStyle = '#0284c7';
-            ctx.font = "bold 12px 'Fredoka'";
-            ctx.textAlign = "center";
-            ctx.fillText("RODA", centerX, centerY + 4);
+        function playSfx(id) {
+            const el = document.getElementById(id);
+            if(el) { el.currentTime = 0; el.play().catch(()=>{}); }
         }
 
         function spinWheel() {
-            if (isSpinning) return;
-            
-            stopAudio();
-            document.getElementById('missionAlert').classList.add('hidden');
+            playSfx('sfx-wheel');
+            const wheel = document.getElementById('wheel');
+            const randomDeg = Math.floor(2000 + Math.random() * 2000);
+            wheel.style.transform = `rotate(${randomDeg}deg)`;
 
-            if (completedMissions.length >= 5) {
-                showPage('pageEnd');
-                return;
-            }
-
-            isSpinning = true;
-            document.getElementById('spinBtn').disabled = true;
-
-            playClickSound();
-
-            const spins = 5 + Math.floor(Math.random() * 3);
-            const randomSlice = Math.floor(Math.random() * numSlices);
-            const totalRotation = spins * 2 * Math.PI + (3 * Math.PI / 2) - (randomSlice * sliceAngle + sliceAngle / 2);
-
-            let start = null;
-            const duration = 4000;
-
-            function animateSpin(timestamp) {
-                if (!start) start = timestamp;
-                const progress = (timestamp - start) / duration;
-
-                if (progress < 1) {
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    currentAngle = easeOut * totalRotation;
-                    drawWheel();
-                    requestAnimationFrame(animateSpin);
-                } else {
-                    currentAngle = totalRotation % (2 * Math.PI);
-                    drawWheel();
-                    isSpinning = false;
-                    document.getElementById('spinBtn').disabled = false;
-
-                    let normalizedAngle = (2 * Math.PI - (currentAngle % (2 * Math.PI)) + Math.PI/2) % (2 * Math.PI);
-                    let selectedIndex = Math.floor(normalizedAngle / sliceAngle) % numSlices;
-                    
-                    const selectedMission = missionsData[selectedIndex];
-
-                    if (completedMissions.includes(selectedMission.id)) {
-                        const alertBox = document.getElementById('missionAlert');
-                        alertBox.innerText = `Misi ${selectedMission.id} (${selectedMission.title}) telah selesai. Mari cuba misi yang lain!`;
-                        alertBox.classList.remove('hidden');
-                    } else {
-                        loadMission(selectedMission);
-                    }
-                }
-            }
-
-            requestAnimationFrame(animateSpin);
+            setTimeout(() => {
+                const randomItem = challenges[Math.floor(Math.random() * challenges.length)];
+                showChallenge(randomItem);
+            }, 4200);
         }
 
-        /* ================= MISSION HANDLING ================= */
-        function loadMission(mission) {
-            currentMission = mission;
-            
-            document.getElementById('missionBadge').innerText = `MISI ${mission.id}`;
-            document.getElementById('missionTitle').innerText = mission.title;
+        function showChallenge(item) {
+            document.getElementById('wheel-screen').classList.add('hidden');
+            const screen = document.getElementById('challenge-screen');
+            screen.classList.remove('hidden');
+            screen.classList.add('flex');
 
-            // Render Phrases Grid (Card teks sahaja)
-            const grid = document.getElementById('phrasesGrid');
-            grid.innerHTML = '';
-            mission.phrases.forEach((phrase) => {
-                const card = document.createElement('div');
-                card.className = "bg-white border-2 border-emerald-200 text-emerald-900 font-bold text-xs md:text-sm p-3.5 rounded-xl text-left shadow-sm flex items-center";
-                card.innerHTML = `<span>${phrase}</span>`;
-                grid.appendChild(card);
-            });
+            screen.innerHTML = `
+                <div class="w-full h-full bg-white/95 rounded-2xl border-4 border-amber-400 p-2 sm:p-3 shadow-2xl flex flex-col justify-between items-center text-center">
+                    
+                    <!-- HEADER SOALAN -->
+                    <div class="flex items-center justify-between border-b-2 border-slate-200 pb-1 w-full px-2">
+                        <span class="bg-purple-600 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-md font-bold">${item.sp}</span>
+                        <h3 class="font-game text-sm sm:text-base text-red-600">🎯 ${item.title}</h3>
+                    </div>
+                    
+                    <!-- KANDUNGAN SOALAN & GAMBAR -->
+                    <div class="grid grid-cols-12 gap-3 w-full my-auto items-center">
+                        <div class="col-span-4 flex flex-col items-center justify-center">
+                            <div class="w-24 h-24 sm:w-32 sm:h-32 bg-amber-100 rounded-2xl border-4 border-yellow-300 overflow-hidden shadow">
+                                <img src="${item.img}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150/f59e0b/ffffff?text=Situasi+Kantin'">
+                            </div>
+                        </div>
 
-            showPage('pageMission');
+                        <div class="col-span-8 bg-blue-50 p-2.5 rounded-xl border-2 border-blue-200 text-left text-xs sm:text-sm font-bold text-slate-800 space-y-2">
+                            <div>
+                                <span class="text-blue-900 font-black block">❓ Soalan 1 (Menaakul):</span>
+                                <p class="text-slate-700">${item.q1}</p>
+                            </div>
+                            <div>
+                                <span class="text-emerald-900 font-black block">🗣️ Soalan 2 (Lisan / Bertutur):</span>
+                                <p class="text-slate-700">${item.q2}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BUTANG KAWALAN -->
+                    <div class="flex space-x-2 w-full">
+                        <button onclick="alert('📌 Cadangan Jawapan Guru:\\n\\n${item.answer}')" class="w-1/2 bg-amber-500 hover:bg-amber-400 text-white font-game py-1.5 rounded-xl text-xs sm:text-sm btn-game border-2 border-white">
+                            📋 Cadangan Jawapan
+                        </button>
+                        <button onclick="completeChallenge()" class="w-1/2 bg-emerald-500 hover:bg-emerald-400 text-white font-game py-1.5 rounded-xl text-xs sm:text-sm btn-game border-2 border-white">
+                            Selesai & Tambah Mata 👍
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeChallenge() {
+            completedCount++;
+            document.getElementById('score-text').innerText = completedCount + " / 5";
+            playSfx('sfx-cheer');
+            confetti({ particleCount: 100, spread: 70 });
+
+            if(completedCount >= 5) {
+                showVictory();
+            } else {
+                backToWheel();
+            }
         }
 
         function backToWheel() {
-            stopAudio();
-            showPage('pageWheel');
+            const screen = document.getElementById('challenge-screen');
+            screen.classList.add('hidden');
+            screen.classList.remove('flex');
+            document.getElementById('wheel-screen').classList.remove('hidden');
         }
 
-        function completeMission() {
-            stopAudio();
-            if (currentMission && !completedMissions.includes(currentMission.id)) {
-                completedMissions.push(currentMission.id);
-            }
-            updateProgress();
-            drawWheel();
+        function showVictory() {
+            const screen = document.getElementById('challenge-screen');
+            screen.innerHTML = `
+                <div class="w-full h-full flex flex-col justify-between items-center text-center p-2">
+                    <div class="w-full h-28 sm:h-36 bg-black rounded-xl overflow-hidden border-4 border-yellow-300 shadow-xl flex items-center justify-center">
+                        <img src="misi_selesai.gif" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/600x200/10b981/ffffff?text=TAHNIAH!+SEMUA+CABARAN+SELESAI'">
+                    </div>
 
-            if (completedMissions.length < 5) {
-                showPage('pageSuccess');
-                confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
-            }
+                    <h2 class="font-game text-lg sm:text-2xl text-yellow-300 drop-shadow">TAHNIAH! ANDA WIRA KANTIN SIHAT!</h2>
+                    <p class="text-xs text-white font-black opacity-90">Anda telah melengkapkan semua latihan lisan & bertutur dengan cemerlang!</p>
+
+                    <button onclick="resetGame()" class="bg-emerald-500 hover:bg-emerald-400 text-white font-game px-6 py-2 rounded-xl text-xs sm:text-sm btn-game border-2 border-white">
+                        🔄 MAIN SEMULA
+                    </button>
+                </div>
+            `;
         }
 
-        function nextSpin() {
-            showPage('pageWheel');
-        }
-
-        function restartGame() {
-            completedMissions = [];
-            currentMission = null;
-            updateProgress();
-            showPage('pageHome');
-        }
-
-        /* ================= AUDIO / SPEECH SYNTHESIS (TTS) ================= */
-        function playCombinedAudio() {
-            if (!currentMission) return;
-
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Reset audio
-
-                // Gabungan Petikan Audio Misi & Arahan Tugasan untuk dibaca sepenuhnya
-                const fullTextToRead = `Sila fokus dan dengar audio ini. ${currentMission.audioText}. Tugasan anda: ${currentMission.task}`;
-
-                const utterance = new SpeechSynthesisUtterance(fullTextToRead);
-                utterance.lang = 'ms-MY';
-                utterance.rate = 0.9;
-                utterance.pitch = 1.0;
-
-                document.getElementById('audioStatus').innerText = "Sedang memainkan audio...";
-                
-                utterance.onend = () => {
-                    document.getElementById('audioStatus').innerText = "Audio selesai";
-                };
-                utterance.onerror = () => {
-                    document.getElementById('audioStatus').innerText = "Bersedia untuk mendengar";
-                };
-
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Sistem audio tidak disokong pada pelayar web ini.");
-            }
-        }
-
-        function stopAudio() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-            document.getElementById('audioStatus').innerText = "Bersedia untuk mendengar";
-        }
-
-        function playClickSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = 400;
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.05);
-            } catch(e) {}
+        function resetGame() {
+            completedCount = 0;
+            document.getElementById('score-text').innerText = "0 / 5";
+            backToWheel();
         }
     </script>
 </body>
 </html>
-
