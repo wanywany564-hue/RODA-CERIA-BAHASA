@@ -164,12 +164,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Wheel Styles */
+        /* Wheel Styles (Dibesarkan) */
         .wheel-container {
             position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 10px 0 20px 0;
+            width: 420px;
+            height: 420px;
+            margin: 15px 0 25px 0;
         }
 
         .wheel-pointer {
@@ -179,9 +179,9 @@
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 35px solid var(--red);
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid var(--red);
             z-index: 10;
             filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
         }
@@ -288,7 +288,7 @@
             background: #F0F4C3;
             border: 3px dashed #AFB42B;
             border-radius: var(--radius);
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             width: 100%;
             max-width: 600px;
@@ -299,21 +299,13 @@
             gap: 15px;
         }
 
-        .audio-icon {
-            font-size: 3.5rem;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .instruction-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #33691E;
+        .question-img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: #FFF;
         }
 
         /* Teacher Panel Accordion */
@@ -429,21 +421,6 @@
             color: #78909C;
         }
 
-        /* Canteen Graphic Elements */
-        .canteen-bg-graphic {
-            width: 100%;
-            height: 80px;
-            background: #E0F2F1;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            font-size: 2rem;
-            border: 2px dashed #80CBC4;
-        }
-
-        /* Table Grid Info */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -459,16 +436,21 @@
 
         .info-table th { background: #ECEFF1; }
 
-        /* Responsive UI */
         @media (max-width: 600px) {
             .main-title { font-size: 1.8rem; }
-            .wheel-container { width: 260px; height: 260px; }
+            .wheel-container { width: 300px; height: 300px; }
             .game-card { padding: 15px; }
             .btn-primary { font-size: 1.1rem; padding: 12px 24px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Elements Audio Tersembunyi -->
+    <audio id="audioQuestion"></audio>
+    <audio id="audioSpin" src="spin.mp3"></audio>
+    <audio id="audioDing" src="ding.mp3"></audio>
+    <audio id="audioCheer" src="cheer.mp3"></audio>
 
     <!-- Top Navigation -->
     <div class="top-nav">
@@ -494,20 +476,10 @@
             
             <div class="tagline">“Dengar dengan teliti, fikir dengan bijak, bertutur dengan yakin!”</div>
 
-            <!-- Canteen Graphic Illustration -->
-            <div class="canteen-bg-graphic" title="Suasana Kantin Sekolah">
-                <span>🏫</span>
-                <span>🧼</span>
-                <span>🍱</span>
-                <span>🥗</span>
-                <span>🗑️</span>
-                <span>👦👧</span>
-            </div>
-
             <!-- Wheel UI -->
             <div class="wheel-container">
                 <div class="wheel-pointer"></div>
-                <canvas id="wheelCanvas" width="320" height="320"></canvas>
+                <canvas id="wheelCanvas" width="420" height="420"></canvas>
             </div>
 
             <button id="spinBtn" class="btn-primary" onclick="spinWheel()">🎡 PUTAR RODA</button>
@@ -534,10 +506,10 @@
             </div>
 
             <div class="audio-box">
-                <div class="audio-icon">🔊</div>
-                <div class="instruction-text" id="promptText">Sila dengar soalan dengan teliti.</div>
+                <!-- Paparan Gambar Soalan -->
+                <img id="questionImage" class="question-img" src="" alt="Gambar Soalan">
                 
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
                     <button class="btn-primary" onclick="playQuestionAudio()" style="font-size: 1rem; padding: 10px 20px;">
                         ▶ DENGAR SOALAN
                     </button>
@@ -588,15 +560,7 @@
             <h1 class="main-title" style="color: var(--green);">TAHNIAH! 🎉</h1>
             <p class="sub-title">Semua cabaran Roda Ceria Bahasa telah selesai!</p>
 
-            <div class="canteen-bg-graphic" style="background: #E8F5E9; border-color: #A5D6A7;">
-                <span>✨</span>
-                <span>🏫</span>
-                <span>👏</span>
-                <span>🌟</span>
-                <span>🏆</span>
-            </div>
-
-            <p style="text-align: center; max-width: 600px; font-size: 1.1rem; margin-bottom: 25px; line-height: 1.5;">
+            <p style="text-align: center; max-width: 600px; font-size: 1.1rem; margin: 20px 0; line-height: 1.5;">
                 Hebat! Kamu telah menggunakan kemahiran mendengar dan bertutur secara aktif untuk membantu menjaga kebersihan serta kesihatan di kantin sekolah.
             </p>
 
@@ -636,14 +600,9 @@
                         • <strong>SP 1.3.1</strong>: Menganalisis maklumat dan memberikan cadangan penambahbaikan.
                     </td>
                 </tr>
-                <tr><th>JUMLAH SOALAN</th><td>15 soalan audio (5 soalan setiap SP)</td></tr>
+                <tr><th>JUMLAH SOALAN</th><td>15 soalan audio & gambar (5 soalan setiap SP)</td></tr>
                 <tr><th>KAEDAH</th><td>Lisan sepenuhnya. Murid mendengar audio dan merespons secara lisan kepada guru.</td></tr>
-                <tr><th>PERANAN GURU</th><td>Mengawal perisian, memutar roda, memainkan audio, dan membuat penilaian manual.</td></tr>
             </table>
-
-            <div style="margin-top: 15px; background: #FFEBEE; padding: 10px; border-radius: 8px; color: #C62828; font-size: 0.85rem;">
-                <strong>Nota Perisian:</strong> Game ini TIDAK memerlukan mikrofon, rakaman suara, mahupun Isian/Taipan teks daripada murid.
-            </div>
         </div>
     </div>
 
@@ -654,40 +613,45 @@
                 {
                     id: 1,
                     sp: "1.1.1",
-                    audioText: "Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih.",
-                    prompt: "Apakah dua perkara yang perlu dilakukan sebelum makan?",
+                    audioFile: "soalan_1.mp3",
+                    imageFile: "gambar_1.png",
+                    audioText: "Murid-murid, sebelum makan di kantin, sila beratur dengan tertib dan pastikan tangan kamu bersih. Apakah dua perkara yang perlu dilakukan sebelum makan?",
                     answer: "1. Beratur dengan tertib.\n2. Memastikan tangan bersih.",
                     keywords: ["beratur", "tertib", "tangan bersih", "cuci tangan"]
                 },
                 {
                     id: 2,
                     sp: "1.1.1",
-                    audioText: "Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja.",
-                    prompt: "Apakah tindakan yang patut dilakukan oleh Aiman?",
+                    audioFile: "soalan_2.mp3",
+                    imageFile: "gambar_2.png",
+                    audioText: "Aiman selesai makan kuih di kantin. Dia mendapati terdapat pembungkus makanan di atas meja. Apakah tindakan yang patut dilakukan oleh Aiman?",
                     answer: "Mengutip pembungkus makanan dan membuangnya ke dalam tong sampah atau membersihkan meja.",
                     keywords: ["kutip sampah", "buang tong sampah", "bersihkan meja"]
                 },
                 {
                     id: 3,
                     sp: "1.1.1",
-                    audioText: "Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan.",
-                    prompt: "Apakah yang perlu dilakukan oleh Deena sebelum makan?",
+                    audioFile: "soalan_3.mp3",
+                    imageFile: "gambar_3.png",
+                    audioText: "Deena, jangan makan dahulu. Tangan kamu masih kotor selepas bermain di padang. Basuh tangan dengan sabun sebelum makan. Apakah yang perlu dilakukan oleh Deena sebelum makan?",
                     answer: "Membasuh tangan menggunakan sabun sehingga bersih.",
                     keywords: ["basuh tangan", "guna sabun"]
                 },
                 {
                     id: 4,
                     sp: "1.1.1",
-                    audioText: "Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor.",
-                    prompt: "Apakah perkara yang perlu kamu lakukan apabila membeli makanan di kantin?",
+                    audioFile: "soalan_4.mp3",
+                    imageFile: "gambar_4.png",
+                    audioText: "Perhatian kepada semua murid. Sila pastikan makanan yang dibeli di kantin ditutup dengan baik. Jangan sentuh makanan dengan tangan yang kotor. Apakah perkara yang perlu kamu lakukan apabila membeli makanan di kantin?",
                     answer: "Memastikan makanan ditutup dengan baik dan memastikan tangan sentiasa bersih.",
                     keywords: ["makanan ditutup", "tangan bersih"]
                 },
                 {
                     id: 5,
                     sp: "1.1.1",
-                    audioText: "Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja.",
-                    prompt: "Apakah respons yang sesuai terhadap situasi tersebut?",
+                    audioFile: "soalan_5.mp3",
+                    imageFile: "gambar_5.png",
+                    audioText: "Kamu sedang makan di kantin. Kamu ternampak seorang rakan membuang tisu di bawah meja. Apakah respons yang sesuai terhadap situasi tersebut?",
                     answer: "Menegur rakan secara baik/sopan dan meminta rakan membuang tisu tersebut ke dalam tong sampah.",
                     keywords: ["tegur secara baik", "buang dalam tong sampah"]
                 }
@@ -696,40 +660,45 @@
                 {
                     id: 6,
                     sp: "1.2.1",
-                    audioText: "Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan.",
-                    prompt: "Jelaskan kepada rakan kamu mengapa dia perlu mencuci tangan sebelum makan.",
-                    answer: "Tangan kotor selepas bermain mengandungi kuman. Mencuci tangan mengelakkan kuman masuk ke dalam badan dan menyebabkan sakit perut.",
+                    audioFile: "soalan_6.mp3",
+                    imageFile: "gambar_6.png",
+                    audioText: "Kamu melihat seorang rakan terus makan selepas bermain di padang tanpa mencuci tangan. Jelaskan kepada rakan kamu mengapa dia perlu mencuci tangan sebelum makan.",
+                    answer: "Tangan kotor selepas bermain mengandungi kuman. Mencuci tangan mengelakkan kuman masuk ke dalam badan.",
                     keywords: ["kuman", "kotoran", "elak sakit perut", "kesihatan"]
                 },
                 {
                     id: 7,
                     sp: "1.2.1",
-                    audioText: "Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin.",
-                    prompt: "Jelaskan mengapa kita perlu menjaga kebersihan meja makan.",
+                    audioFile: "soalan_7.mp3",
+                    imageFile: "gambar_7.png",
+                    audioText: "Guru meminta kamu menerangkan kepada rakan tentang kepentingan menjaga kebersihan meja makan di kantin. Jelaskan mengapa kita perlu menjaga kebersihan meja makan.",
                     answer: "Supaya tempat makan menjadi bersih, selesa untuk digunakan murid lain, dan mengurangkan lalat atau kuman.",
                     keywords: ["bersih", "selesa", "elak kuman/lalat"]
                 },
                 {
                     id: 8,
                     sp: "1.2.1",
-                    audioText: "Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin.",
-                    prompt: "Jelaskan kepada rakan kamu cara menjaga kebersihan tempat makan sebelum meninggalkan kantin.",
+                    audioFile: "soalan_8.mp3",
+                    imageFile: "gambar_8.png",
+                    audioText: "Waktu rehat telah tamat. Kamu dan rakan-rakan perlu meninggalkan kantin. Jelaskan kepada rakan kamu cara menjaga kebersihan tempat makan sebelum meninggalkan kantin.",
                     answer: "Mengemas meja, mengutip sisa makanan atau sampah, dan membuangnya ke dalam tong sampah.",
                     keywords: ["kemas meja", "kutip sampah", "buang tong sampah"]
                 },
                 {
                     id: 9,
                     sp: "1.2.1",
-                    audioText: "Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja. Kamu ingin menegurnya dengan sopan.",
-                    prompt: "Apakah yang akan kamu katakan kepada rakan kamu?",
-                    answer: "\"Maaf [nama rakan], bolehkah kamu buang sisa makanan ini ke dalam tong sampah supaya meja kita sentiasa bersih?\"",
+                    audioFile: "soalan_9.mp3",
+                    imageFile: "gambar_9.png",
+                    audioText: "Kamu melihat seorang rakan meninggalkan sisa makanan di atas meja. Kamu ingin menegurnya dengan sopan. Apakah yang akan kamu katakan kepada rakan kamu?",
+                    answer: "\"Maaf, bolehkah kamu buang sisa makanan ini ke dalam tong sampah supaya meja kita sentiasa bersih?\"",
                     keywords: ["maaf", "minta tolong", "bertatasusila", "sopan"]
                 },
                 {
                     id: 10,
                     sp: "1.2.1",
-                    audioText: "Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih.",
-                    prompt: "Jelaskan sekurang-kurangnya tiga cara menjaga kebersihan kantin sekolah.",
+                    audioFile: "soalan_10.mp3",
+                    imageFile: "gambar_10.png",
+                    audioText: "Guru meminta kamu bercakap di hadapan kelas tentang cara memastikan kantin sekolah sentiasa bersih. Jelaskan sekurang-kurangnya tiga cara menjaga kebersihan kantin sekolah.",
                     answer: "1. Membuang sampah dalam tong sampah.\n2. Membersihkan meja selepas makan.\n3. Mencuci tangan sebelum dan selepas makan.",
                     keywords: ["3 cara", "tong sampah", "bersihkan meja", "cuci tangan"]
                 }
@@ -738,40 +707,45 @@
                 {
                     id: 11,
                     sp: "1.3.1",
-                    audioText: "Selepas waktu rehat, terdapat banyak pembungkus makanan dan tisu di atas meja. Beberapa murid juga meninggalkan sisa makanan di dalam pinggan. Keadaan ini menyebabkan kantin kelihatan kotor.",
-                    prompt: "Apakah masalah yang berlaku di kantin tersebut? Berikan satu cadangan untuk mengatasinya.",
+                    audioFile: "soalan_11.mp3",
+                    imageFile: "gambar_11.png",
+                    audioText: "Selepas waktu rehat, terdapat banyak pembungkus makanan dan tisu di atas meja. Beberapa murid juga meninggalkan sisa makanan di dalam pinggan. Keadaan ini menyebabkan kantin kelihatan kotor. Apakah masalah yang berlaku di kantin tersebut? Berikan satu cadangan untuk mengatasinya.",
                     answer: "Masalah: Murid meninggalkan sampah dan sisa makanan di atas meja.\nCadangan: Murid mesti membuang sisa makanan dan pembungkus ke dalam tong sampah selepas makan.",
                     keywords: ["masalah sampah/sisa", "cadangan pembersihan"]
                 },
                 {
                     id: 12,
                     sp: "1.3.1",
-                    audioText: "Dalam pemerhatian pertama, kebanyakan murid membuang sampah ke dalam tong sampah. Dalam pemerhatian kedua, terdapat banyak sampah ditinggalkan di bawah meja selepas waktu rehat.",
-                    prompt: "Apakah perubahan yang berlaku? Apakah cadangan kamu untuk memperbaiki keadaan tersebut?",
+                    audioFile: "soalan_12.mp3",
+                    imageFile: "gambar_12.png",
+                    audioText: "Dalam pemerhatian pertama, kebanyakan murid membuang sampah ke dalam tong sampah. Dalam pemerhatian kedua, terdapat banyak sampah ditinggalkan di bawah meja selepas waktu rehat. Apakah perubahan yang berlaku? Apakah cadangan kamu untuk memperbaiki keadaan tersebut?",
                     answer: "Perubahan: Kebersihan kantin merosot pada pemerhatian kedua.\nCadangan: Menetap jawatankuasa bertugas murid atau peringatan bertulis di meja.",
                     keywords: ["kebersihan merosot", "cadangan kawalan/peringatan"]
                 },
                 {
                     id: 13,
                     sp: "1.3.1",
-                    audioText: "Sumber pertama menyatakan bahawa beberapa murid tidak mencuci tangan sebelum makan. Sumber kedua pula menunjukkan bahawa sinki kantin mempunyai sabun yang mencukupi.",
-                    prompt: "Berdasarkan kedua-dua maklumat tersebut, apakah masalah yang berlaku dan apakah cadangan kamu?",
+                    audioFile: "soalan_13.mp3",
+                    imageFile: "gambar_13.png",
+                    audioText: "Sumber pertama menyatakan bahawa beberapa murid tidak mencuci tangan sebelum makan. Sumber kedua pula menunjukkan bahawa sinki kantin mempunyai sabun yang mencukupi. Berdasarkan kedua-dua maklumat tersebut, apakah masalah yang berlaku dan apakah cadangan kamu?",
                     answer: "Masalah: Sikap murid yang malas mencuci tangan walaupun kemudahan sabun disediakan.\nCadangan: Guru bertugas memberi teguran atau meletakkan poster langkah cuci tangan di sinki.",
                     keywords: ["sikap murid", "poster/peringatan sinki"]
                 },
                 {
                     id: 14,
                     sp: "1.3.1",
-                    audioText: "Guru mendapati tong sampah di kantin sering penuh selepas waktu rehat. Sampah juga kadangkala diletakkan di luar tong.",
-                    prompt: "Apakah cadangan penambahbaikan yang sesuai? Jelaskan sebab kamu.",
+                    audioFile: "soalan_14.mp3",
+                    imageFile: "gambar_14.png",
+                    audioText: "Guru mendapati tong sampah di kantin sering penuh selepas waktu rehat. Sampah juga kadangkala diletakkan di luar tong. Apakah cadangan penambahbaikan yang sesuai? Jelaskan sebab kamu.",
                     answer: "Cadangan: Menambah bilangan tong sampah atau saiz tong sampah yang lebih besar.\nSebab: Supaya dapat menampung jumlah sampah yang banyak semasa waktu rehat.",
                     keywords: ["tambah tong sampah", "saiz besar", "sebab munasabah"]
                 },
                 {
                     id: 15,
                     sp: "1.3.1",
-                    audioText: "Hasil pemerhatian guru menunjukkan bahawa kantin sekolah bersih sebelum waktu rehat. Namun begitu, selepas waktu rehat, terdapat sisa makanan di atas meja, tisu di lantai dan beberapa murid tidak membersihkan tempat makan. Guru mahu keadaan kantin menjadi lebih bersih dan selesa.",
-                    prompt: "Nyatakan masalah yang berlaku dan berikan dua cadangan penambahbaikan berserta alasan.",
+                    audioFile: "soalan_15.mp3",
+                    imageFile: "gambar_15.png",
+                    audioText: "Hasil pemerhatian guru menunjukkan bahawa kantin sekolah bersih sebelum waktu rehat. Namun begitu, selepas waktu rehat, terdapat sisa makanan di atas meja, tisu di lantai dan beberapa murid tidak membersihkan tempat makan. Guru mahu keadaan kantin menjadi lebih bersih dan selesa. Nyatakan masalah yang berlaku dan berikan dua cadangan penambahbaikan berserta alasan.",
                     answer: "Masalah: Kantin kotor selepas waktu rehat.\nCadangan 1: Kempen meja bersih.\nCadangan 2: Pengawasan guru/pengawas.\nAlasan: Supaya kantin sentiasa selesa dan bersih.",
                     keywords: ["masalah pengotoran", "2 cadangan", "alasan rasional"]
                 }
@@ -812,20 +786,18 @@
                 const angle = startAngle + i * arc;
                 ctx.fillStyle = sectors[i].color;
                 ctx.beginPath();
-                ctx.arc(160, 160, 150, angle, angle + arc, false);
-                ctx.lineTo(160, 160);
+                ctx.arc(210, 210, 200, angle, angle + arc, false);
+                ctx.lineTo(210, 210);
                 ctx.fill();
 
-                // Inner Border
                 ctx.strokeStyle = "#FFF";
-                ctx.lineWidth = 4;
+                ctx.lineWidth = 5;
                 ctx.stroke();
 
-                // Text
                 ctx.save();
                 ctx.fillStyle = "#FFF";
-                ctx.font = "bold 18px Fredoka, sans-serif";
-                ctx.translate(160 + Math.cos(angle + arc / 2) * 100, 160 + Math.sin(angle + arc / 2) * 100);
+                ctx.font = "bold 22px Fredoka, sans-serif";
+                ctx.translate(210 + Math.cos(angle + arc / 2) * 130, 210 + Math.sin(angle + arc / 2) * 130);
                 ctx.rotate(angle + arc / 2 + Math.PI / 2);
                 ctx.fillText(sectors[i].label, -ctx.measureText(sectors[i].label).width / 2, 0);
                 ctx.restore();
@@ -833,11 +805,11 @@
 
             // Center Pin
             ctx.beginPath();
-            ctx.arc(160, 160, 25, 0, 2 * Math.PI);
+            ctx.arc(210, 210, 30, 0, 2 * Math.PI);
             ctx.fillStyle = "#FFF";
             ctx.fill();
             ctx.strokeStyle = "#B2EBF2";
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 6;
             ctx.stroke();
         }
 
@@ -846,7 +818,6 @@
         function spinWheel() {
             if (isSpinning) return;
             
-            // Filter uncompleted SPs if any
             let availableSps = Object.keys(spProgress).filter(sp => spProgress[sp] < 5);
             if (availableSps.length === 0) {
                 showPage('pageComplete');
@@ -856,6 +827,11 @@
             isSpinning = true;
             document.getElementById('spinBtn').disabled = true;
             document.getElementById('spinResultBox').style.display = 'none';
+
+            // Play Custom Spin Sound
+            const audioSpin = document.getElementById('audioSpin');
+            audioSpin.currentTime = 0;
+            audioSpin.play().catch(e => console.log('Audio spin error:', e));
 
             let spinTime = 0;
             let spinTimeTotal = Math.random() * 2000 + 3000;
@@ -870,7 +846,6 @@
                 let spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
                 startAngle += (spinAngle * Math.PI / 180);
                 drawWheel();
-                playClickSound();
                 setTimeout(rotateWheel, 30);
             }
             rotateWheel();
@@ -885,67 +860,40 @@
         function stopRotateWheel() {
             isSpinning = false;
             document.getElementById('spinBtn').disabled = false;
+
+            const audioSpin = document.getElementById('audioSpin');
+            audioSpin.pause();
+
+            const audioDing = document.getElementById('audioDing');
+            audioDing.currentTime = 0;
+            audioDing.play().catch(e => console.log('Audio ding error:', e));
             
             const degrees = (startAngle * 180 / Math.PI) % 360;
             const arcd = (arc * 180 / Math.PI);
             
-            // Pointer is at top (270 degrees)
             let index = Math.floor((360 - (degrees % 360) + 270) % 360 / arcd);
             index = index % sectors.length;
 
             currentSp = sectors[index].code;
 
-            // If SP is already done, auto push to next available
             if (spProgress[currentSp] >= 5) {
                 currentSp = Object.keys(spProgress).find(sp => spProgress[sp] < 5);
             }
 
-            playDingSound();
             document.getElementById('selectedSpTitle').innerText = spNames[currentSp];
             document.getElementById('spinResultBox').style.display = 'block';
         }
 
-        /* ================= AUDIO SYNTHESIS ================= */
+        /* ================= AUDIO PLAYER FOR QUESTIONS ================= */
         function playQuestionAudio() {
             const q = questionsData[currentSp][currentQuestionIndex];
             if (!q) return;
 
-            // Use Web Speech API for Malay voice synthesis
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop ongoing speech
-                const utterance = new SpeechSynthesisUtterance(q.audioText);
-                utterance.lang = 'ms-MY';
-                utterance.rate = 0.85; // Medium speed for Year 4
-                utterance.pitch = 1.0;
-                window.speechSynthesis.speak(utterance);
-            } else {
-                alert("Sintesis suara tidak disokong pada pelayar ini.");
-            }
-        }
-
-        function playClickSound() {
-            // Simple Web Audio API click tone
-            try {
-                const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctxAudio.createOscillator();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, ctxAudio.currentTime);
-                osc.connect(ctxAudio.destination);
-                osc.start();
-                osc.stop(ctxAudio.currentTime + 0.03);
-            } catch (e) {}
-        }
-
-        function playDingSound() {
-            try {
-                const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctxAudio.createOscillator();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(800, ctxAudio.currentTime);
-                osc.connect(ctxAudio.destination);
-                osc.start();
-                osc.stop(ctxAudio.currentTime + 0.2);
-            } catch (e) {}
+            const player = document.getElementById('audioQuestion');
+            player.src = q.audioFile;
+            player.play().catch(e => {
+                alert("Fail audio (" + q.audioFile + ") tidak dijumpai. Sila pastikan fail berada di folder yang betul.");
+            });
         }
 
         /* ================= QUESTION FLOW ================= */
@@ -963,11 +911,9 @@
         function loadQuestion() {
             const q = questionsData[currentSp][currentQuestionIndex];
             
-            // Update Headers & UI
             document.getElementById('spBadge').innerText = `SP ${currentSp}`;
-            document.getElementById('promptText').innerText = q.prompt;
+            document.getElementById('questionImage').src = q.imageFile;
             
-            // Update Dots Progress
             const dots = document.querySelectorAll('#progressDots .dot');
             dots.forEach((dot, idx) => {
                 dot.className = 'dot';
@@ -975,7 +921,6 @@
                 if (idx === currentQuestionIndex) dot.classList.add('active');
             });
 
-            // Update Teacher Panel
             document.getElementById('tAudioText').innerText = q.audioText;
             document.getElementById('tAnswer').innerText = q.answer;
             
@@ -988,7 +933,6 @@
                 kwContainer.appendChild(tag);
             });
 
-            // Reset Evaluation State
             document.getElementById('evalFeedback').innerText = '';
             document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('teacherContent').classList.remove('show');
@@ -1005,6 +949,12 @@
                 feedbackEl.style.color = "var(--green)";
                 feedbackEl.innerText = "Syabas! Jawapan murid sesuai dan tepat.";
                 document.getElementById('nextBtn').style.display = 'inline-block';
+                
+                // Play Cheer Sound
+                const audioCheer = document.getElementById('audioCheer');
+                audioCheer.currentTime = 0;
+                audioCheer.play().catch(e => console.log('Audio cheer error:', e));
+
             } else if (type === 'guidance') {
                 feedbackEl.style.color = "var(--accent-hover)";
                 feedbackEl.innerText = "Bagus! Bimbing murid untuk berfikir berdasarkan audio yang didengar.";
@@ -1021,7 +971,6 @@
                 currentQuestionIndex = spProgress[currentSp];
                 loadQuestion();
             } else {
-                // Check if all 15 completed
                 let totalCompleted = Object.values(spProgress).reduce((a, b) => a + b, 0);
                 if (totalCompleted >= 15) {
                     showPage('pageComplete');
